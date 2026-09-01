@@ -1,0 +1,6 @@
+export * from "./hero-section"
+export * from "./services-section"
+export * from "./how-it-works-section"
+export * from "./why-choose-us-section"
+export * from "./faq-section"
+export * from "./cta-section"

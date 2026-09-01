@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-muted: var(--primary-muted);
+
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-muted: var(--success-muted);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-muted: var(--warning-muted);
+
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-muted: var(--info-muted);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+:root {
+  /* Core Foundation: Clean Digital Navy / Royal Theme */
+  --background: oklch(0.99 0.005 255);
+  --foreground: oklch(0.12 0.03 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.03 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.03 255);
+  
+  /* Primary Brand: Trustworthy Deep Royal Navy (#0C356A) */
+  --primary: oklch(0.38 0.18 255);
+  --primary-hover: oklch(0.32 0.19 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-muted: oklch(0.94 0.04 255);
+
+  /* WhatsApp Brand Green */
+  --whatsapp: oklch(0.62 0.20 145);
+  --whatsapp-hover: oklch(0.55 0.21 145);
+  --whatsapp-foreground: oklch(0.99 0 0);
+
+  /* Semantic Status Colors */
+  --success: oklch(0.58 0.20 150);
+  --success-foreground: oklch(0.99 0 0);
+  --success-muted: oklch(0.94 0.05 150);
+
+  /* Warning / Gold Highlight: High-contrast rich amber gold */
+  --warning: oklch(0.76 0.19 75);
+  --warning-foreground: oklch(0.15 0.05 255);
+  --warning-muted: oklch(0.95 0.05 75);
+
+  /* Info / Accent Blue */
+  --info: oklch(0.52 0.19 240);
+  --info-foreground: oklch(0.99 0 0);
+  --info-muted: oklch(0.94 0.04 240);
+
+  --secondary: oklch(0.95 0.02 255);
+  --secondary-foreground: oklch(0.25 0.12 255);
+  --muted: oklch(0.96 0.008 255);
+  --muted-foreground: oklch(0.40 0.03 255);
+  --accent: oklch(0.93 0.035 255);
+  --accent-foreground: oklch(0.20 0.15 255);
+  --destructive: oklch(0.55 0.24 25);
+  
+  --border: oklch(0.88 0.015 255);
+  --input: oklch(0.88 0.015 255);
+  --ring: oklch(0.38 0.18 255);
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: oklch(0.10 0.025 255);
+  --foreground: oklch(0.98 0.005 255);
+  --card: oklch(0.15 0.03 255);
+  --card-foreground: oklch(0.98 0.005 255);
+  --popover: oklch(0.15 0.03 255);
+  --popover-foreground: oklch(0.98 0.005 255);
+
+  --primary: oklch(0.68 0.19 255);
+  --primary-hover: oklch(0.74 0.17 255);
+  --primary-foreground: oklch(0.08 0.02 255);
+  --primary-muted: oklch(0.22 0.06 255);
+
+  --whatsapp: oklch(0.68 0.19 145);
+  --whatsapp-hover: oklch(0.74 0.18 145);
+  --whatsapp-foreground: oklch(0.08 0.02 145);
+
+  --success: oklch(0.68 0.18 150);
+  --success-foreground: oklch(0.08 0.02 150);
+  --success-muted: oklch(0.22 0.05 150);
+
+  --warning: oklch(0.78 0.18 75);
+  --warning-foreground: oklch(0.08 0.02 65);
+  --warning-muted: oklch(0.23 0.05 75);
+
+  --info: oklch(0.68 0.17 230);
+  --info-foreground: oklch(0.08 0.02 230);
+  --info-muted: oklch(0.22 0.05 230);
+
+  --secondary: oklch(0.20 0.03 255);
+  --secondary-foreground: oklch(0.98 0.005 255);
+  --muted: oklch(0.18 0.025 255);
+  --muted-foreground: oklch(0.72 0.02 255);
+  --accent: oklch(0.22 0.04 255);
+  --accent-foreground: oklch(0.98 0.005 255);
+  --destructive: oklch(0.68 0.20 25);
+
+  --border: oklch(0.24 0.025 255);
+  --input: oklch(0.24 0.025 255);
+  --ring: oklch(0.68 0.19 255);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-[#0C356A]/20 selection:text-[#0C356A];
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* Subtle Organic Noise Texture Utility */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Timeline Light Beam Animations */
+@keyframes beamHorizontal {
+  0% {
+    left: -20%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes beamVertical {
+  0% {
+    top: -20%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-timeline-beam-h {
+  animation: beamHorizontal 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-timeline-beam-v {
+  animation: beamVertical 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
