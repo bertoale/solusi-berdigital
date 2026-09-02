@@ -149,7 +149,7 @@ export function PortfolioShowcaseSection() {
             <LayoutGrid className="size-3.5 text-primary" />
             <span>CONTOH HASIL PENGERJAAN NYATA</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground text-balance">
+          <h2 className="theme-text text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-foreground text-balance">
             Preview Desain & Struktur Website yang Kami Bangun
           </h2>
           <p className="mt-3 text-base text-muted-foreground leading-relaxed text-balance">

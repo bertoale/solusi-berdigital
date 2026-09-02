@@ -3,19 +3,27 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // If in admin dashboard, let AdminLayout render its own specialized admin topbar/sidebar
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const navLinks = [
-    { label: "Layanan", href: "#layanan" },
-    { label: "Cara Kerja", href: "#cara-kerja" },
-    { label: "Keunggulan", href: "#keunggulan" },
-    { label: "Tanya Jawab", href: "#faq" },
+    { label: "Beranda", href: "/" },
+    { label: "Layanan", href: "/layanan" },
+    { label: "Portofolio", href: "/portofolio" },
+    { label: "Blog", href: "/blog" },
+    { label: "Cara Kerja", href: "/#cara-kerja" },
+    { label: "FAQ", href: "/#faq" },
   ];
 
   return (
@@ -38,9 +46,6 @@ export function Navbar() {
               <span className="font-bold text-base tracking-tight text-foreground leading-none">
                 Solusi Berdigital
               </span>
-              {/* <Badge variant="outline" className="text-[10px] px-1.5 py-0 font-mono hidden sm:inline-flex">
-                Pro
-              </Badge> */}
             </div>
             <span className="text-[11px] text-muted-foreground font-medium leading-tight mt-0.5">
               Jasa Website & Sistem Bisnis
@@ -50,15 +55,26 @@ export function Navbar() {
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-3.5 py-1.5 rounded-lg hover:text-foreground hover:bg-muted/60 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg transition-colors",
+                  isActive
+                    ? "text-foreground font-semibold bg-muted/80"
+                    : "hover:text-foreground hover:bg-muted/50"
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Desktop CTA Action Button styled with Shadcn buttonVariants */}
@@ -69,7 +85,7 @@ export function Navbar() {
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2",
+              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2"
             )}
           >
             {/* WhatsApp Icon */}
@@ -85,7 +101,7 @@ export function Navbar() {
           </a>
         </div>
 
-        {/* Mobile Hamburger Toggle using Shadcn Button */}
+        {/* Mobile Hamburger Toggle */}
         <Button
           variant="ghost"
           size="icon"
@@ -102,14 +118,14 @@ export function Navbar() {
         <div className="md:hidden border-b border-border bg-background px-4 pt-3 pb-6 space-y-4">
           <nav className="flex flex-col space-y-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/60 transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
           <div className="pt-2 border-t border-border">
@@ -120,7 +136,7 @@ export function Navbar() {
               onClick={() => setIsOpen(false)}
               className={cn(
                 buttonVariants({ variant: "default" }),
-                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2",
+                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2"
               )}
             >
               <span>Chat WhatsApp Sekarang</span>

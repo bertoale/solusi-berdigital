@@ -12,7 +12,7 @@ interface HeroSectionProps {
 
 export function HeroSection({
   backgroundImageUrl = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80",
-  cutoutImageUrl = "/hero-images.webp",
+  cutoutImageUrl = "/side-hello.png",
   whatsappUrl = "https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20pembuatan%20website%20untuk%20meningkatkan%20penjualan%20bisnis%20saya.",
 }: HeroSectionProps) {
   return (
@@ -31,15 +31,15 @@ export function HeroSection({
         <div className="absolute inset-0 bg-background/60 dark:bg-background/70" />
       </div>
 
-      {/* Asymmetric Two-Column Content Grid */}
+      {/* Content Container */}
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           {/* LEFT COLUMN: Headline, Subtitle, WhatsApp CTA & Value Props */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+          <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-start text-left space-y-6">
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-foreground leading-[1.12] text-balance">
+            <h1 className="theme-text text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-foreground leading-[1.12] text-balance">
               Jasa Pembuatan Website &{" "}
-              <span className="text-primary">Toko Online Siap Pakai</span> untuk
+              <span className="theme-text-primary text-primary">Toko Online Siap Pakai</span> untuk
               Bisnis Anda
             </h1>
 
@@ -56,7 +56,7 @@ export function HeroSection({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-base px-8 py-4 rounded-xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 active:scale-[0.98] transition-all group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-base px-8 py-4 rounded-2xl active:scale-[0.98] transition-all group"
               >
                 {/* Official WhatsApp SVG Icon */}
                 <svg
@@ -88,28 +88,23 @@ export function HeroSection({
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* RIGHT COLUMN: Cutout PNG (Hidden on mobile, visible on lg+) */}
-          <div className="hidden lg:flex lg:col-span-5 relative justify-end items-center">
-            {/* Ambient back-glow */}
-            <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 via-blue-500/10 to-indigo-600/20 rounded-3xl blur-2xl -z-10 transform scale-95" />
+      {/* RIGHT EDGE CHARACTER: Posisikan di tepi kanan layar */}
+      <div className="hidden lg:block absolute right-0 bottom-0 z-10 pointer-events-none select-none h-[88%] max-h-[580px] w-auto aspect-[448/901]">
+        {/* Ambient back-glow */}
+        <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 via-blue-500/10 to-indigo-600/20 rounded-full blur-3xl -z-10" />
 
-            {/* Cutout Image Container */}
-            <div className="relative w-full max-w-[420px] lg:max-w-none lg:-mr-6 xl:-mr-10 h-[420px] lg:h-[480px] flex items-end justify-center">
-              <div className="absolute bottom-2 inset-x-12 h-8 bg-black/30 dark:bg-black/60 rounded-full blur-xl -z-10" />
-
-              <div className="relative w-full h-full">
-                <Image
-                  src={cutoutImageUrl}
-                  alt="Solusi Berdigital - Tim Profesional Pembuatan Website"
-                  fill
-                  priority
-                  sizes="(max-width: 1200px) 45vw, 40vw"
-                  className="object-contain object-bottom drop-shadow-[0_20px_25px_rgba(0,0,0,0.22)] dark:drop-shadow-[0_20px_35px_rgba(0,0,0,0.55)] transition-transform duration-500 hover:scale-[1.02]"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="relative w-full h-full">
+          <Image
+            src={cutoutImageUrl}
+            alt="Solusi Berdigital - Karakter Halo"
+            fill
+            priority
+            sizes="(max-width: 1200px) 300px, 360px"
+            className="object-contain object-right-bottom drop-shadow-[-8px_16px_24px_rgba(0,0,0,0.18)] dark:drop-shadow-[-8px_16px_30px_rgba(0,0,0,0.45)]"
+          />
         </div>
       </div>
     </section>

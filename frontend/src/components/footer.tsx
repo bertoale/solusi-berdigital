@@ -3,11 +3,18 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
+import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { PhoneCall, Mail, MapPin, CheckCircle2 } from "lucide-react";
+import { PhoneCall, Mail, MapPin, Lock } from "lucide-react";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // If in admin dashboard, hide public footer
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <footer className="border-t border-border/80 bg-card/60 text-foreground pt-14 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -31,9 +38,9 @@ export function Footer() {
             </Link>
 
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-              Jasa pembuatan website profesional, toko online, dan sistem
-              digital siap pakai untuk UMKM, pebisnis, dan instansi di seluruh
-              Indonesia.
+              Jasa pembuatan website profesional, toko online WhatsApp, dan
+              sistem bisnis digital siap pakai untuk UMKM, korporat, dan
+              pengusaha di seluruh Indonesia.
             </p>
           </div>
 
@@ -44,77 +51,77 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
               <li>
-                <a
-                  href="#layanan"
+                <Link
+                  href="/layanan/company-profile"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
                   Company Profile
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#layanan"
+                <Link
+                  href="/layanan/toko-online"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
                   Toko Online WhatsApp
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#layanan"
+                <Link
+                  href="/layanan/landing-page"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
                   Landing Page Iklan
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#layanan"
+                <Link
+                  href="/layanan/aplikasi-kasir-pos"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
                   Sistem Kasir & POS
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Navigasi Cepat */}
+          {/* Col 3: Navigasi Halaman */}
           <div className="space-y-3">
             <h4 className="font-bold text-sm text-foreground tracking-tight">
-              Navigasi
+              Navigasi Halaman
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
               <li>
-                <a
-                  href="#layanan"
+                <Link
+                  href="/layanan"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
-                  Layanan
-                </a>
+                  Semua Layanan
+                </Link>
               </li>
               <li>
-                <a
-                  href="#cara-kerja"
+                <Link
+                  href="/portofolio"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
-                  Cara Kerja
-                </a>
+                  Portofolio & Studi Kasus
+                </Link>
               </li>
               <li>
-                <a
-                  href="#keunggulan"
+                <Link
+                  href="/blog"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
-                  Keunggulan Kami
-                </a>
+                  Blog & Edukasi Digital
+                </Link>
               </li>
               <li>
-                <a
-                  href="#faq"
+                <Link
+                  href="/#cara-kerja"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
-                  Tanya Jawab (FAQ)
-                </a>
+                  Alur Cara Kerja
+                </Link>
               </li>
             </ul>
           </div>
@@ -142,13 +149,13 @@ export function Footer() {
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="size-4 text-primary shrink-0 mt-0.5" />
-                <span>Jakarta & Layanan Online Seluruh Indonesia</span>
+                <span>Badung, Bali & Layanan Online Seluruh Indonesia</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Shadcn Separator Component */}
+        {/* Separator Component */}
         <Separator className="my-2" />
 
         {/* Bottom Copyright Bar */}
@@ -157,10 +164,14 @@ export function Footer() {
             © {new Date().getFullYear()} Solusi Berdigital. Hak Cipta
             Dilindungi.
           </p>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1">
-              Dibuat untuk memajukan transformasi digital bisnis Indonesia
-            </span>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin/login"
+              className="inline-flex items-center gap-1 hover:text-foreground transition-colors text-[11px] opacity-70 hover:opacity-100"
+            >
+              <Lock className="size-3" />
+              <span>Admin Portal</span>
+            </Link>
           </div>
         </div>
       </div>

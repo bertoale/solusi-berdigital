@@ -1,0 +1,134 @@
+/* ========================================================================= */
+/* THEME: GLASSMORPHISM                                                      */
+/* Ciri khas: Efek kaca transparan blur, border glowing halus, ambient depth */
+/* ========================================================================= */
+
+:root {
+  /* Color Tokens */
+  --background: oklch(0.97 0.015 250);
+  --foreground: oklch(0.12 0.03 255);
+  --card: rgba(255, 255, 255, 0.70);
+  --card-foreground: oklch(0.12 0.03 255);
+  --popover: rgba(255, 255, 255, 0.85);
+  --popover-foreground: oklch(0.12 0.03 255);
+  
+  --primary: oklch(0.38 0.18 255);
+  --primary-hover: oklch(0.32 0.19 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-muted: oklch(0.93 0.04 255);
+
+  --whatsapp: oklch(0.62 0.20 145);
+  --whatsapp-hover: oklch(0.55 0.21 145);
+  --whatsapp-foreground: oklch(0.99 0 0);
+
+  --success: oklch(0.58 0.20 150);
+  --success-foreground: oklch(0.99 0 0);
+  --success-muted: oklch(0.94 0.05 150);
+
+  --warning: oklch(0.76 0.19 75);
+  --warning-foreground: oklch(0.15 0.05 255);
+  --warning-muted: oklch(0.95 0.05 75);
+
+  --info: oklch(0.52 0.19 240);
+  --info-foreground: oklch(0.99 0 0);
+  --info-muted: oklch(0.94 0.04 240);
+
+  --secondary: rgba(255, 255, 255, 0.5);
+  --secondary-foreground: oklch(0.25 0.12 255);
+  --muted: rgba(240, 245, 255, 0.6);
+  --muted-foreground: oklch(0.40 0.03 255);
+  --accent: rgba(230, 240, 255, 0.7);
+  --accent-foreground: oklch(0.20 0.15 255);
+  --destructive: oklch(0.55 0.24 25);
+  
+  --border: rgba(255, 255, 255, 0.6);
+  --input: rgba(255, 255, 255, 0.6);
+  --ring: oklch(0.38 0.18 255);
+
+  /* Glassmorphism Structural Tokens */
+  --radius: 1rem;
+  --card-border-width: 1px;
+  --card-border-style: solid;
+  --card-backdrop: blur(16px);
+  --card-shadow: 0 8px 32px 0 rgba(12, 53, 106, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+  --card-hover-shadow: 0 14px 44px 0 rgba(12, 53, 106, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  
+  --btn-shadow: 0 4px 15px 0 rgba(12, 53, 106, 0.15), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+  --btn-hover-shadow: 0 8px 25px 0 rgba(12, 53, 106, 0.25);
+  --btn-active-shadow: 0 2px 8px 0 rgba(12, 53, 106, 0.12);
+  --btn-hover-transform: translateY(-2px);
+  --btn-active-transform: translateY(0px);
+
+  --inset-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  
+  --heading-text-shadow: 0 2px 10px rgba(12, 53, 106, 0.1);
+  --heading-primary-text-shadow: 0 2px 12px rgba(12, 53, 106, 0.2);
+  --heading-warning-text-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
+
+  /* Legacy Aliases */
+  --theme-card-shadow: var(--card-shadow);
+  --theme-card-hover-shadow: var(--card-hover-shadow);
+  --theme-btn-shadow: var(--btn-shadow);
+  --theme-btn-pressed-shadow: var(--btn-active-shadow);
+  --theme-inset-shadow: var(--inset-shadow);
+}
+
+.dark {
+  --background: oklch(0.10 0.03 255);
+  --foreground: oklch(0.98 0.005 255);
+  --card: rgba(18, 26, 45, 0.65);
+  --card-foreground: oklch(0.98 0.005 255);
+  --popover: rgba(18, 26, 45, 0.85);
+  --popover-foreground: oklch(0.98 0.005 255);
+
+  --primary: oklch(0.68 0.19 255);
+  --primary-hover: oklch(0.74 0.17 255);
+  --primary-foreground: oklch(0.08 0.02 255);
+  --primary-muted: oklch(0.22 0.06 255);
+
+  --whatsapp: oklch(0.68 0.19 145);
+  --whatsapp-hover: oklch(0.74 0.18 145);
+  --whatsapp-foreground: oklch(0.08 0.02 145);
+
+  --success: oklch(0.68 0.18 150);
+  --success-foreground: oklch(0.08 0.02 150);
+  --success-muted: oklch(0.22 0.05 150);
+
+  --warning: oklch(0.78 0.18 75);
+  --warning-foreground: oklch(0.08 0.02 65);
+  --warning-muted: oklch(0.23 0.05 75);
+
+  --info: oklch(0.68 0.17 230);
+  --info-foreground: oklch(0.08 0.02 230);
+  --info-muted: oklch(0.22 0.05 230);
+
+  --secondary: rgba(30, 42, 70, 0.5);
+  --secondary-foreground: oklch(0.98 0.005 255);
+  --muted: rgba(25, 35, 60, 0.5);
+  --muted-foreground: oklch(0.72 0.02 255);
+  --accent: rgba(40, 55, 90, 0.6);
+  --accent-foreground: oklch(0.98 0.005 255);
+  --destructive: oklch(0.68 0.20 25);
+
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: oklch(0.68 0.19 255);
+
+  --card-backdrop: blur(20px);
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --card-hover-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  --btn-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+  --btn-hover-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.5);
+  --btn-active-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+
+  --inset-shadow: inset 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+  --heading-text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+  --heading-primary-text-shadow: 0 2px 14px rgba(104, 182, 255, 0.3);
+  --heading-warning-text-shadow: 0 2px 14px rgba(245, 158, 11, 0.3);
+
+  --theme-card-shadow: var(--card-shadow);
+  --theme-card-hover-shadow: var(--card-hover-shadow);
+  --theme-btn-shadow: var(--btn-shadow);
+  --theme-btn-pressed-shadow: var(--btn-active-shadow);
+  --theme-inset-shadow: var(--inset-shadow);
+}

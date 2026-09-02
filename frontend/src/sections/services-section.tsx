@@ -139,8 +139,8 @@ export function ServicesSection() {
         
         {/* Section Header with Side Image */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12 sm:mb-16">
-          <div className="lg:col-span-7 xl:col-span-8 space-y-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-4">
+            <h2 className="theme-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
               Solusi Pembuatan Website & Sistem Sesuai Kebutuhan Bisnis Anda
             </h2>
 
@@ -150,16 +150,16 @@ export function ServicesSection() {
           </div>
 
           {/* Cutout Image enlarged to match title & subtitle height */}
-          <div className="hidden lg:flex lg:col-span-5 xl:col-span-4 justify-end items-center relative">
-            <div className="relative w-full h-[280px] lg:h-[320px] xl:h-[350px] max-w-[360px] flex items-center justify-center">
+          <div className="hidden lg:flex lg:col-span-5 xl:col-span-5 justify-end items-center relative">
+            <div className="relative w-full h-[260px] lg:h-[300px] xl:h-[340px] max-w-[420px] xl:max-w-[460px] flex items-center justify-center">
               {/* Soft ambient back-glow */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-warning/15 to-transparent rounded-full blur-3xl -z-10" />
               <Image
-                src="/service-image.png"
+                src="/solution.png"
                 alt="Solusi Berdigital Services"
                 fill
                 priority
-                sizes="(max-width: 1200px) 35vw, 360px"
+                sizes="(max-width: 1200px) 40vw, 460px"
                 className="object-contain object-right drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -173,7 +173,7 @@ export function ServicesSection() {
             return (
               <div
                 key={service.id}
-                className="relative rounded-3xl border border-border/80 bg-card/90 backdrop-blur-md p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-primary/40 hover:-translate-y-1 transition-all duration-300 group"
+                className="relative theme-card bg-card/95 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 group"
               >
                 <div className="space-y-5">
                   {/* Top Bar: Category, Badge & Delivery Time */}
@@ -216,7 +216,7 @@ export function ServicesSection() {
                   </p>
 
                   {/* Feature Checklist Box */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-muted/40 border border-border/70 space-y-3">
+                  <div className="p-4 sm:p-5 theme-inset bg-muted/40 space-y-3">
                     <div className="text-xs font-bold text-foreground uppercase tracking-wide">
                       Fasilitas Lengkap yang Anda Dapatkan:
                     </div>
@@ -243,7 +243,7 @@ export function ServicesSection() {
                     )}.%20Boleh%20minta%20info%20lebih%20lengkapnya?`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs sm:text-sm px-6 h-11 rounded-xl shadow-md active:scale-[0.98] transition-all w-full sm:w-auto"
+                    className="inline-flex items-center justify-center gap-2 theme-btn bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs sm:text-sm px-6 h-11 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto"
                   >
                     <span>Konsultasikan Paket Ini</span>
                     <ArrowRight className="size-4" />
@@ -255,7 +255,7 @@ export function ServicesSection() {
         </div>
 
         {/* Bottom Consultation Banner */}
-        <div className="mt-12 sm:mt-16 md:mt-20 p-6 sm:p-8 lg:p-10 rounded-3xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/5 shadow-md flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+        <div className="mt-12 sm:mt-16 md:mt-20 p-6 sm:p-8 lg:p-10 theme-card bg-gradient-to-br from-card via-card to-primary/5 flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
               <ShieldCheck className="size-4" />
@@ -273,7 +273,7 @@ export function ServicesSection() {
             href="https://wa.me/6285858089376?text=Halo%20saya%20mau%20tanya%20rekomendasi%20paket%20website%20yang%20cocok%20untuk%20usaha%20saya"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl shadow-lg shadow-success/20 active:scale-[0.98] shrink-0 transition-all w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl active:scale-[0.98] shrink-0 transition-all w-full sm:w-auto"
           >
             <PhoneCall className="size-4 sm:size-5 shrink-0" />
             <span>Tanya Rekomendasi via WhatsApp</span>

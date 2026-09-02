@@ -31,12 +31,12 @@ export function CTASection({
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* HIGH-IMPACT FEATURED CTA BANNER CARD */}
-        <div className="relative rounded-3xl lg:rounded-[2.5rem] bg-gradient-to-br from-primary via-primary to-primary-hover text-primary-foreground p-8 sm:p-12 lg:p-16 shadow-2xl shadow-primary/25 border border-primary-foreground/20 overflow-hidden">
+        <div className="relative theme-card bg-gradient-to-br from-primary via-primary to-primary-hover text-primary-foreground p-8 sm:p-12 lg:p-16 shadow-2xl shadow-primary/25 border-2 border-primary-foreground/20 overflow-hidden">
           {/* Ambient Lighting & Geometric Patterns Inside Banner */}
           <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
             {/* Vivid Aurora Glows */}
             <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-warning/20 rounded-full blur-[100px]" />
-            <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-primary-foreground/10 rounded-full blur-[110px]" />
+            <div className="absolute -bottom-24 -left-24 w-[500px] h-[500px] bg-whatsapp/15 rounded-full blur-[110px]" />
 
             {/* Sharp Dot Grid */}
             <div className="absolute inset-0 bg-[radial-gradient(var(--color-primary-foreground)_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-15 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_70%,transparent_100%)]" />
@@ -58,15 +58,15 @@ export function CTASection({
             {/* LEFT COLUMN: Main Pitch & Action CTA */}
             <div className="lg:col-span-7 space-y-6 text-left">
               {/* Badge Tag */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-foreground/15 border border-primary-foreground/20 text-warning text-xs font-bold tracking-wide">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-foreground/15 border border-primary-foreground/25 text-warning text-xs font-bold tracking-wide shadow-sm">
                 <span className="size-2 rounded-full bg-warning animate-ping" />
                 <span>KONSULTASI GRATIS & BEBAS DISKUSI</span>
               </div>
 
               {/* Main Headline */}
-              <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight text-primary-foreground leading-[1.15] text-balance">
+              <h2 className="theme-text text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-tight text-primary-foreground leading-[1.15] text-balance">
                 Punya Rencana Bisnis Baru?{" "}
-                <span className="text-warning drop-shadow-sm">
+                <span className="theme-text-warning text-warning">
                   Mari Diskusikan Website yang Tepat
                 </span>{" "}
                 Sekarang.
@@ -79,15 +79,15 @@ export function CTASection({
 
               {/* CTA Buttons Group */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                {/* PRIMARY GOLD CTA BUTTON */}
+                {/* PRIMARY VIVID GREEN WHATSAPP CTA BUTTON */}
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 bg-warning hover:bg-warning/90 text-primary font-extrabold text-base sm:text-lg px-8 h-14 rounded-2xl shadow-xl shadow-black/30 hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all group"
+                  className="inline-flex items-center justify-center gap-3 theme-btn bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-base sm:text-lg px-8 h-14 rounded-2xl shadow-lg shadow-[#25D366]/30 active:scale-[0.98] transition-all group"
                 >
                   <svg
-                    className="w-5 h-5 fill-current shrink-0"
+                    className="w-6 h-6 fill-current shrink-0"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
@@ -108,7 +108,7 @@ export function CTASection({
               </div>
 
               {/* Trust Micro-Checkpoints */}
-              <div className="pt-3 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-primary-foreground/80 font-medium">
+              <div className="pt-3 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-primary-foreground/90 font-medium">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-warning shrink-0" />
                   <span>Bebas Konsultasi Kapan Saja</span>
@@ -126,30 +126,32 @@ export function CTASection({
 
             {/* RIGHT COLUMN: High-Contrast Live WhatsApp Interactive Box */}
             <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl sm:rounded-3xl border-2 border-primary-foreground/25 bg-black/25 backdrop-blur-xl p-6 sm:p-7 shadow-2xl space-y-5">
+              <div className="theme-card-flat bg-black/40 backdrop-blur-xl p-6 sm:p-7 space-y-5 border-2 border-primary-foreground/25 shadow-2xl">
                 {/* Header inside Preview Box */}
                 <div className="flex items-center justify-between pb-4 border-b border-primary-foreground/15">
                   <div className="flex items-center gap-3">
-                    <div className="relative size-11 rounded-xl bg-primary-foreground/15 flex items-center justify-center text-warning font-bold">
-                      <MessageSquare className="size-5" />
+                    <div className="relative size-11 rounded-full bg-[#25D366] text-white flex items-center justify-center font-bold shadow-md shadow-[#25D366]/30">
+                      <MessageSquare className="size-5 fill-current" />
                       {/* Live Online Indicator */}
-                      <span className="absolute -top-1 -right-1 size-3.5 rounded-full bg-emerald-400 border-2 border-primary" />
+                      <span className="absolute -top-0.5 -right-0.5 size-3.5 rounded-full bg-emerald-300 border-2 border-primary animate-pulse" />
                     </div>
                     <div>
-                      <h3 className="text-sm sm:text-base font-bold text-primary-foreground">Konsultan Solusi Berdigital</h3>
-                      <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1.5 mt-0.5">
-                        <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <h3 className="text-sm sm:text-base font-extrabold text-primary-foreground">Konsultan Solusi Berdigital</h3>
+                      <span className="text-xs text-[#25D366] font-bold flex items-center gap-1.5 mt-0.5">
+                        <span className="size-2 rounded-full bg-[#25D366] animate-pulse" />
                         Online Siap Melayani
                       </span>
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono font-bold text-warning px-2.5 py-0.5 rounded-md bg-primary-foreground/15 border border-primary-foreground/20">Fast Reply</span>
+                  <span className="text-[11px] font-mono font-black text-warning px-2.5 py-1 rounded-full bg-warning/20 border border-warning/30">Fast Reply</span>
                 </div>
 
                 {/* Chat Message Bubble */}
-                <div className="p-4 rounded-2xl bg-primary-foreground/12 text-xs sm:text-sm text-primary-foreground leading-relaxed border border-primary-foreground/20 space-y-1">
-                  <p className="font-bold text-warning">👋 Halo! Mau konsultasi kebutuhan apa?</p>
-                  <p className="text-primary-foreground/90 text-xs">Pilih topik yang Anda butuhkan untuk langsung terhubung dengan tim kami:</p>
+                <div className="p-4 rounded-2xl theme-inset bg-primary-foreground/15 text-xs sm:text-sm text-primary-foreground leading-relaxed border border-primary-foreground/20 space-y-1.5 shadow-inner">
+                  <p className="font-bold text-warning flex items-center gap-1.5">
+                    <span>👋</span> Halo! Mau konsultasi kebutuhan apa?
+                  </p>
+                  <p className="text-primary-foreground/90 text-xs font-medium">Pilih topik yang Anda butuhkan untuk langsung terhubung dengan tim kami:</p>
                 </div>
 
                 {/* Direct Topic Action Pills */}
@@ -162,15 +164,15 @@ export function CTASection({
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3.5 rounded-xl bg-primary-foreground/10 hover:bg-warning hover:text-primary border border-primary-foreground/20 text-xs sm:text-sm font-semibold text-primary-foreground transition-all group/item shadow-xs hover:shadow-md hover:font-bold"
+                      className="flex items-center justify-between p-3.5 rounded-xl bg-primary-foreground/12 hover:bg-[#25D366] hover:text-white border border-primary-foreground/20 hover:border-[#25D366] text-xs sm:text-sm font-bold text-primary-foreground transition-all group/item shadow-sm hover:shadow-lg hover:shadow-[#25D366]/20"
                     >
                       <span>{topic}</span>
-                      <ArrowRight className="size-4 text-warning group-hover/item:text-primary group-hover/item:translate-x-1 transition-all" />
+                      <ArrowRight className="size-4 text-warning group-hover/item:text-white group-hover/item:translate-x-1 transition-all" />
                     </a>
                   ))}
                 </div>
 
-                <div className="pt-1 text-center text-xs text-primary-foreground/80">
+                <div className="pt-1 text-center text-xs text-primary-foreground/80 font-medium">
                   <span>Klik topik di atas untuk langsung membuka chat WhatsApp</span>
                 </div>
               </div>

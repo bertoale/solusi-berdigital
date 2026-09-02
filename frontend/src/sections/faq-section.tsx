@@ -122,7 +122,7 @@ export function FAQSection() {
           
           {/* LEFT COLUMN: Exactly top-aligned with the first accordion item */}
           <div className="lg:col-span-5 flex flex-col items-start justify-start text-left space-y-6">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-foreground text-balance leading-[1.15] m-0 p-0">
+            <h2 className="theme-text text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-foreground text-balance leading-[1.15] m-0 p-0">
               Pertanyaan yang Sering Diajukan Calon Klien
             </h2>
 
@@ -132,7 +132,7 @@ export function FAQSection() {
 
             {/* Direct WhatsApp Consultation Box (Desktop Only: Hidden on Mobile, Visible on lg+) */}
             <div className="hidden lg:block pt-2">
-              <div className="p-5 sm:p-6 rounded-2xl bg-card border border-border/80 shadow-xs space-y-4">
+              <div className="p-5 sm:p-6 theme-card bg-card space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                     <MessageCircle className="size-5" />
@@ -151,7 +151,7 @@ export function FAQSection() {
                   href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20punya%20pertanyaan%20seputar%20pembuatan%20website"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl shadow-md active:scale-[0.98] transition-all w-full group"
+                  className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group"
                 >
                   <svg
                     className="w-4 h-4 fill-current shrink-0"
@@ -187,10 +187,10 @@ export function FAQSection() {
               return (
                 <div
                   key={faq.id}
-                  className={`rounded-2xl border bg-card overflow-hidden transition-colors ${
+                  className={`theme-card-flat bg-card overflow-hidden transition-all duration-300 ${
                     isOpen
-                      ? "border-primary/40 shadow-xs"
-                      : "border-border/80 hover:border-border"
+                      ? "border-primary/40 shadow-theme-card"
+                      : "hover:border-primary/30"
                   }`}
                 >
                   {/* Full-width Clickable Trigger */}
@@ -228,7 +228,7 @@ export function FAQSection() {
                     <div
                       className={`size-7 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 ${
                         isOpen
-                          ? "bg-primary text-primary-foreground rotate-180"
+                          ? "theme-btn bg-primary text-primary-foreground rotate-180"
                           : "bg-muted text-muted-foreground rotate-0"
                       }`}
                     >
@@ -248,7 +248,7 @@ export function FAQSection() {
 
             {/* Mobile-Only WhatsApp Consultation Card (Visible on Mobile, Hidden on lg+) */}
             <div className="block lg:hidden pt-4">
-              <div className="p-5 sm:p-6 rounded-2xl bg-card border border-border/80 shadow-xs space-y-4">
+              <div className="p-5 sm:p-6 theme-card bg-card space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                     <MessageCircle className="size-5" />
@@ -267,7 +267,7 @@ export function FAQSection() {
                   href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20punya%20pertanyaan%20seputar%20pembuatan%20website"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl shadow-md active:scale-[0.98] transition-all w-full group"
+                  className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group"
                 >
                   <svg
                     className="w-4 h-4 fill-current shrink-0"

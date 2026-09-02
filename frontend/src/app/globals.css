@@ -2,6 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* ========================================================================= */
+/* ACTIVE THEME SELECTOR                                                     */
+/* Ubah / uncomment baris tema yang ingin Anda aktifkan:                     */
+/* ========================================================================= */
+@import "./themes/claymorphism.css";
+/* @import "./themes/glassmorphism.css"; */
+/* @import "./themes/neobrutalism.css";   */
+/* @import "./themes/minimalist.css";     */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -10,7 +19,7 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
-  
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-hover: var(--primary-hover);
@@ -47,105 +56,23 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-xl: calc(var(--radius) * 1.35);
+  --radius-2xl: calc(var(--radius) * 1.75);
+  --radius-3xl: calc(var(--radius) * 2.25);
+
+  --shadow-theme-card: var(--card-shadow);
+  --shadow-theme-card-hover: var(--card-hover-shadow);
+  --shadow-theme-btn: var(--btn-shadow);
+  --shadow-theme-btn-hover: var(--btn-hover-shadow);
+  --shadow-theme-btn-active: var(--btn-active-shadow);
 }
 
-:root {
-  /* Core Foundation: Clean Digital Navy / Royal Theme */
-  --background: oklch(0.99 0.005 255);
-  --foreground: oklch(0.12 0.03 255);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0.03 255);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0.03 255);
-  
-  /* Primary Brand: Trustworthy Deep Royal Navy (#0C356A) */
-  --primary: oklch(0.38 0.18 255);
-  --primary-hover: oklch(0.32 0.19 255);
-  --primary-foreground: oklch(0.99 0 0);
-  --primary-muted: oklch(0.94 0.04 255);
-
-  /* WhatsApp Brand Green */
-  --whatsapp: oklch(0.62 0.20 145);
-  --whatsapp-hover: oklch(0.55 0.21 145);
-  --whatsapp-foreground: oklch(0.99 0 0);
-
-  /* Semantic Status Colors */
-  --success: oklch(0.58 0.20 150);
-  --success-foreground: oklch(0.99 0 0);
-  --success-muted: oklch(0.94 0.05 150);
-
-  /* Warning / Gold Highlight: High-contrast rich amber gold */
-  --warning: oklch(0.76 0.19 75);
-  --warning-foreground: oklch(0.15 0.05 255);
-  --warning-muted: oklch(0.95 0.05 75);
-
-  /* Info / Accent Blue */
-  --info: oklch(0.52 0.19 240);
-  --info-foreground: oklch(0.99 0 0);
-  --info-muted: oklch(0.94 0.04 240);
-
-  --secondary: oklch(0.95 0.02 255);
-  --secondary-foreground: oklch(0.25 0.12 255);
-  --muted: oklch(0.96 0.008 255);
-  --muted-foreground: oklch(0.40 0.03 255);
-  --accent: oklch(0.93 0.035 255);
-  --accent-foreground: oklch(0.20 0.15 255);
-  --destructive: oklch(0.55 0.24 25);
-  
-  --border: oklch(0.88 0.015 255);
-  --input: oklch(0.88 0.015 255);
-  --ring: oklch(0.38 0.18 255);
-  --radius: 0.875rem;
-}
-
-.dark {
-  --background: oklch(0.10 0.025 255);
-  --foreground: oklch(0.98 0.005 255);
-  --card: oklch(0.15 0.03 255);
-  --card-foreground: oklch(0.98 0.005 255);
-  --popover: oklch(0.15 0.03 255);
-  --popover-foreground: oklch(0.98 0.005 255);
-
-  --primary: oklch(0.68 0.19 255);
-  --primary-hover: oklch(0.74 0.17 255);
-  --primary-foreground: oklch(0.08 0.02 255);
-  --primary-muted: oklch(0.22 0.06 255);
-
-  --whatsapp: oklch(0.68 0.19 145);
-  --whatsapp-hover: oklch(0.74 0.18 145);
-  --whatsapp-foreground: oklch(0.08 0.02 145);
-
-  --success: oklch(0.68 0.18 150);
-  --success-foreground: oklch(0.08 0.02 150);
-  --success-muted: oklch(0.22 0.05 150);
-
-  --warning: oklch(0.78 0.18 75);
-  --warning-foreground: oklch(0.08 0.02 65);
-  --warning-muted: oklch(0.23 0.05 75);
-
-  --info: oklch(0.68 0.17 230);
-  --info-foreground: oklch(0.08 0.02 230);
-  --info-muted: oklch(0.22 0.05 230);
-
-  --secondary: oklch(0.20 0.03 255);
-  --secondary-foreground: oklch(0.98 0.005 255);
-  --muted: oklch(0.18 0.025 255);
-  --muted-foreground: oklch(0.72 0.02 255);
-  --accent: oklch(0.22 0.04 255);
-  --accent-foreground: oklch(0.98 0.005 255);
-  --destructive: oklch(0.68 0.20 25);
-
-  --border: oklch(0.24 0.025 255);
-  --input: oklch(0.24 0.025 255);
-  --ring: oklch(0.68 0.19 255);
-}
-
+/* ========================================================================= */
+/* AUTOMATIC BASE LAYER STYLES                                               */
+/* ========================================================================= */
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -156,6 +83,83 @@
   html {
     @apply font-sans;
   }
+
+  /* Otomatis menerapkan text shadow tema ke seluruh tag heading H1 & H2 */
+  h1,
+  h2 {
+    text-shadow: var(--heading-text-shadow);
+  }
+}
+
+/* ========================================================================= */
+/* UNIVERSAL THEME COMPONENT UTILITIES                                       */
+/* Seluruh class ini otomatis merespons file tema yang sedang di-import!      */
+/* ========================================================================= */
+.theme-card {
+  box-shadow: var(--card-shadow);
+  border: var(--card-border-width, 1px) var(--card-border-style, solid)
+    var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: var(--card-backdrop, none);
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease;
+}
+
+.theme-card:hover {
+  box-shadow: var(--card-hover-shadow);
+  transform: var(--btn-hover-transform, translateY(-3px));
+}
+
+.theme-card-flat {
+  box-shadow: var(--card-shadow);
+  border: var(--card-border-width, 1px) var(--card-border-style, solid)
+    var(--border);
+  border-radius: var(--radius);
+  backdrop-filter: var(--card-backdrop, none);
+}
+
+.theme-btn {
+  box-shadow: var(--btn-shadow);
+  border-radius: var(--radius);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-btn:hover {
+  box-shadow: var(--btn-hover-shadow);
+  transform: var(--btn-hover-transform);
+}
+
+.theme-btn:active {
+  box-shadow: var(--btn-active-shadow);
+  transform: var(--btn-active-transform);
+}
+
+.theme-inset {
+  box-shadow: var(--inset-shadow);
+  border-radius: calc(var(--radius) * 0.75);
+}
+
+.theme-pill {
+  border-radius: 9999px;
+  box-shadow: var(--card-shadow);
+}
+
+/* 3D / Theme Heading Text Utilities */
+.theme-text {
+  text-shadow: var(--heading-text-shadow);
+}
+
+.theme-text-primary {
+  text-shadow: var(--heading-primary-text-shadow);
+}
+
+.theme-text-warning {
+  text-shadow: var(--heading-warning-text-shadow);
+}
+
+.theme-text-inset {
+  text-shadow: var(--inset-shadow);
 }
 
 /* Subtle Organic Noise Texture Utility */

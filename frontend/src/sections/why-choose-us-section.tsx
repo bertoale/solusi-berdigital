@@ -6,9 +6,9 @@ import {
   Gift,
   Headphones,
   ShieldCheck,
-  Zap,
-  Server,
-  Lock,
+  CalendarCheck,
+  Globe,
+  Wrench,
   MessageCircle,
 } from "lucide-react";
 
@@ -126,7 +126,7 @@ export function WhyChooseUsSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16 space-y-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
+          <h2 className="theme-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
             Solusi Nyaman untuk Pemilik Usaha yang Mau Hasil Maksimal
           </h2>
 
@@ -141,65 +141,65 @@ export function WhyChooseUsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* LEFT COLUMN: Real Value & Operational Security Showcase Panel */}
           <div className="lg:col-span-5 relative">
-            <div className="rounded-3xl bg-primary text-primary-foreground p-7 sm:p-9 shadow-xl relative overflow-hidden space-y-6">
+            <div className="theme-card bg-primary text-primary-foreground p-7 sm:p-9 relative overflow-hidden space-y-6 border-2 border-primary-foreground/30 shadow-2xl">
               {/* Subtle Pattern & Gold Highlight */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-warning/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-warning/15 rounded-full blur-2xl pointer-events-none" />
 
               <div className="space-y-2 relative z-10">
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-primary-foreground leading-snug">
+                <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-primary-foreground leading-snug">
                   Transparan, Siap Pakai, & Terlindungi Penuh
                 </h3>
-                <p className="text-xs sm:text-sm text-primary-foreground/80 leading-relaxed">
+                <p className="text-xs sm:text-sm text-primary-foreground/90 leading-relaxed font-normal">
                   Setiap proyek dikembangkan langsung oleh tim berdedikasi
                   dengan standar keamanan tinggi dan kemudahan akses pemilik
                   bisnis.
                 </p>
               </div>
 
-              {/* Concrete Value Modules inside Panel */}
-              <div className="space-y-3 relative z-10 pt-2">
-                <div className="p-3.5 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/10 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-xl bg-warning/20 text-warning flex items-center justify-center shrink-0">
-                      <Zap className="size-5" />
+              {/* Concrete Value Modules inside Panel (SOLID ORANGE / NON-TRANSPARENT) */}
+              <div className="space-y-3.5 relative z-10 pt-2">
+                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
+                  <div className="flex items-center gap-3.5">
+                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
+                      <CalendarCheck className="size-5" />
                     </div>
                     <div>
-                      <span className="text-xs font-bold block text-primary-foreground">
+                      <span className="text-sm font-black block text-primary leading-tight">
                         Timeline Terarah
                       </span>
-                      <span className="text-[11px] text-primary-foreground/70">
+                      <span className="text-xs text-primary/85 font-semibold leading-snug">
                         Mulai 3 s/d 7 Hari Kerja Selesai
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/10 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-xl bg-warning/20 text-warning flex items-center justify-center shrink-0">
-                      <Server className="size-5" />
+                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
+                  <div className="flex items-center gap-3.5">
+                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
+                      <Globe className="size-5" />
                     </div>
                     <div>
-                      <span className="text-xs font-bold block text-primary-foreground">
+                      <span className="text-sm font-black block text-primary leading-tight">
                         Website & Domain Resmi Milik Anda
                       </span>
-                      <span className="text-[11px] text-primary-foreground/70">
+                      <span className="text-xs text-primary/85 font-semibold leading-snug">
                         Bukan sistem sewa. Aset digital mandiri bisnis Anda
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/10 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-xl bg-warning/20 text-warning flex items-center justify-center shrink-0">
-                      <Lock className="size-5" />
+                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
+                  <div className="flex items-center gap-3.5">
+                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
+                      <Wrench className="size-5" />
                     </div>
                     <div>
-                      <span className="text-xs font-bold block text-primary-foreground">
+                      <span className="text-sm font-black block text-primary leading-tight">
                         Dukungan Pemeliharaan
                       </span>
-                      <span className="text-[11px] text-primary-foreground/70">
+                      <span className="text-xs text-primary/85 font-semibold leading-snug">
                         Backup Rutin & Bantuan Teknis
                       </span>
                     </div>
@@ -208,7 +208,7 @@ export function WhyChooseUsSection() {
               </div>
 
               {/* Bottom Support Badge */}
-              <div className="pt-2 border-t border-primary-foreground/15 flex items-center gap-2 text-xs text-primary-foreground/80">
+              <div className="pt-2 border-t border-primary-foreground/20 flex items-center gap-2 text-xs text-primary-foreground/90 font-medium">
                 <MessageCircle className="w-4 h-4 text-warning shrink-0" />
                 <span>Konsultasi & panduan langsung via WhatsApp</span>
               </div>
@@ -222,11 +222,11 @@ export function WhyChooseUsSection() {
               return (
                 <div
                   key={item.num}
-                  className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card shadow-xs hover:border-primary/40 transition-all duration-300 group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5"
+                  className="p-5 sm:p-6 theme-card bg-card transition-all duration-300 group flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5"
                 >
-                  {/* Left: Icon Centered to Card */}
-                  <div className="size-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                    <Icon className="size-6" />
+                  {/* Left: Icon Centered to Card (Round Claymorphic Circle) */}
+                  <div className="size-12 sm:size-13 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.9),inset_-2px_-2px_5px_rgba(12,53,106,0.14),0_4px_10px_rgba(12,53,106,0.08)] dark:shadow-[inset_2px_2px_4px_rgba(255,255,255,0.15),inset_-2px_-2px_5px_rgba(0,0,0,0.4),0_4px_10px_rgba(0,0,0,0.3)] border border-primary/25 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                    <Icon className="size-6 transition-transform duration-300" />
                   </div>
 
                   {/* Right: Content Details */}

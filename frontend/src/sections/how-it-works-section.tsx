@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import {
   Code2,
   Rocket,
@@ -73,18 +74,36 @@ export function HowItWorksSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         
-        {/* Section Header */}
-        <div className="max-w-3xl mb-14 sm:mb-16 lg:mb-20 space-y-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
-            Dari Ide Hingga Website Siap Pakai dalam{" "}
-            <span className="text-primary">
-              3 Langkah Praktis
-            </span>
-          </h2>
+        {/* Section Header with Side Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12 sm:mb-16">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-4">
+            <h2 className="theme-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-balance leading-tight">
+              Dari Ide Hingga Website Siap Pakai dalam{" "}
+              <span className="theme-text-primary text-primary">
+                3 Langkah Praktis
+              </span>
+            </h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-balance leading-relaxed">
-            Anda tidak perlu repot koding atau mengurus server. Seluruh proses teknis kami tangani dengan alur kerja yang jelas dan terarah.
-          </p>
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-balance leading-relaxed">
+              Anda tidak perlu repot koding atau mengurus server. Seluruh proses teknis kami tangani dengan alur kerja yang jelas dan terarah.
+            </p>
+          </div>
+
+          {/* Cutout Step Image at the right of the title */}
+          <div className="hidden lg:flex lg:col-span-5 xl:col-span-5 justify-end items-center relative">
+            <div className="relative w-full h-[220px] lg:h-[260px] xl:h-[290px] max-w-[460px] xl:max-w-[500px] flex items-center justify-center">
+              {/* Soft ambient back-glow */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-warning/15 to-emerald-500/15 rounded-full blur-3xl -z-10" />
+              <Image
+                src="/step-image.png"
+                alt="Alur Kerja Pembuatan Website"
+                fill
+                priority
+                sizes="(max-width: 1200px) 40vw, 500px"
+                className="object-contain object-right drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
         </div>
 
         {/* ========================================================================= */}
@@ -106,7 +125,7 @@ export function HowItWorksSection() {
                   
                   {/* Top: Signature Large Typographic Step Node */}
                   <div className="mb-6">
-                    <div className="relative w-[88px] h-[88px] rounded-2xl bg-card border-2 border-primary/30 group-hover:border-warning shadow-md flex flex-col items-center justify-center transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-xl group-hover:shadow-primary/15">
+                    <div className="relative w-[88px] h-[88px] rounded-2xl theme-card bg-card border-2 border-primary/30 group-hover:border-warning flex flex-col items-center justify-center transition-all duration-500 group-hover:-translate-y-2">
                       {/* Ambient micro-glow on hover */}
                       <div className="absolute -inset-1 bg-gradient-to-tr from-warning/25 to-primary/20 rounded-3xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
                       <span className="font-mono text-2xl font-black text-warning group-hover:scale-105 transition-transform duration-300">
@@ -156,14 +175,14 @@ export function HowItWorksSection() {
                 <div key={item.step} className="flex items-start gap-4 sm:gap-5 group">
                   
                   {/* Step Number Badge */}
-                  <div className="relative w-11 h-11 rounded-xl bg-card border-2 border-primary shadow-md flex items-center justify-center shrink-0 z-10 transition-transform duration-300 group-hover:scale-105">
+                  <div className="relative w-11 h-11 rounded-xl theme-card-flat bg-card border-2 border-primary flex items-center justify-center shrink-0 z-10 transition-transform duration-300 group-hover:scale-105">
                     <span className="font-mono text-sm font-black text-warning">
                       {item.step}
                     </span>
                   </div>
 
                   {/* Content Body */}
-                  <div className="flex-1 bg-card p-5 sm:p-6 rounded-2xl border border-border/80 shadow-xs space-y-2.5 transition-all duration-300 group-hover:border-primary/40 group-hover:shadow-md">
+                  <div className="flex-1 bg-card p-5 sm:p-6 theme-card space-y-2.5 transition-all duration-300">
                     <div className="flex items-center gap-2.5">
                       <div className="size-7 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                         <Icon className="w-4 h-4" />
