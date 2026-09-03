@@ -11,14 +11,11 @@ on:
           - "all"
           - "frontend"
         default: "all"
-  push:
-    branches:
-      - main
 
 jobs:
   build-frontend:
     name: Build & Push Frontend
-    if: ${{ github.event_name == 'push' || github.event.inputs.target == 'all' || github.event.inputs.target == 'frontend' }}
+    if: ${{ github.event.inputs.target == 'all' || github.event.inputs.target == 'frontend' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
