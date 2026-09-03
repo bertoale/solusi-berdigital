@@ -8,6 +8,7 @@ import {
   Store,
   Megaphone,
   Calculator,
+  Database,
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
@@ -15,9 +16,11 @@ import {
   Sparkles,
   Clock,
   Briefcase,
-  HelpCircle,
   PhoneCall,
 } from "lucide-react";
+import { ServiceFaqAccordion } from "@/components/service-faq-accordion";
+import { ServiceDetailSchema } from "@/jsonLD";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -28,17 +31,27 @@ const iconMap: Record<string, typeof Building2> = {
   Store,
   Megaphone,
   Calculator,
+  Database,
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const service = await getServiceBySlug(slug);
+
   if (!service) {
-    return { title: "Layanan Tidak Ditemukan | Solusi Berdigital" };
+    return {
+      title: "Layanan Tidak Ditemukan | Solusi Berdigital",
+    };
   }
+
   return {
     title: `${service.title} | Solusi Berdigital`,
     description: service.shortDesc,
+    openGraph: {
+      title: `${service.title} | Solusi Berdigital`,
+      description: service.shortDesc,
+      url: `https://solusiberdigital.id/layanan/${service.slug}`,
+    },
   };
 }
 
@@ -55,7 +68,8 @@ export default async function ServiceDetailPage({ params }: Props) {
   const Icon = iconMap[service.iconName] || Building2;
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden bg-noise">
+    <div className="min-h-screen bg-background relative bg-noise">
+      <ServiceDetailSchema service={service} />
       {/* Ambient Aurora Glow */}
       <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
         <div className="absolute top-10 right-1/4 w-[600px] h-[400px] bg-primary/15 rounded-full blur-[140px]" />
@@ -121,18 +135,20 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <h2 className="theme-text text-xl sm:text-2xl font-bold tracking-tight text-foreground">
                   Tentang Layanan Ini
                 </h2>
-                <div className="theme-inset text-sm sm:text-base text-foreground/90 leading-relaxed whitespace-pre-line bg-card/80 border border-border/80 p-6 sm:p-8 rounded-2xl">
+                <div className="theme-card bg-card text-sm sm:text-base text-foreground/90 leading-relaxed whitespace-pre-line p-6 sm:p-8 rounded-2xl border border-border">
                   {service.fullDesc}
                 </div>
               </div>
 
-              {/* Recommended For Target Audience */}
-              <div className="p-6 theme-card-flat bg-primary/[0.05] border border-primary/20 space-y-2 rounded-2xl">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
-                  <Briefcase className="size-4" />
+              {/* Recommended For Target Audience - Highlight Card */}
+              <div className="p-6 sm:p-7 theme-card bg-primary-muted border-2 border-primary/30 space-y-3 rounded-2xl relative overflow-hidden shadow-md">
+                <div className="flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-wider text-primary">
+                  <div className="size-6 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shrink-0 shadow-xs">
+                    <Briefcase className="size-3.5" />
+                  </div>
                   <span>Sangat Direkomendasikan Untuk:</span>
                 </div>
-                <p className="text-sm sm:text-base font-semibold text-foreground">
+                <p className="text-sm sm:text-base font-bold text-foreground leading-relaxed">
                   {service.recommendedFor}
                 </p>
               </div>
@@ -155,93 +171,69 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
 
-              {/* Deliverables Box */}
-              {service.deliverables && service.deliverables.length > 0 && (
-                <div className="space-y-4">
-                  <h2 className="theme-text text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                    Standar Serah Terima Proyek
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {service.deliverables.map((deliv, idx) => (
-                      <div key={idx} className="p-5 theme-inset bg-muted/40 border border-border space-y-1.5 rounded-2xl">
-                        <span className="text-xs font-bold text-primary block">{deliv.title}</span>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{deliv.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
-              {/* FAQ Section */}
+              {/* FAQ Section - Interactive Accordion matching Homepage Design */}
               {service.faqs && service.faqs.length > 0 && (
-                <div className="space-y-4">
-                  <h2 className="theme-text text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-                    <HelpCircle className="size-5 text-primary" />
-                    <span>Pertanyaan Umum (FAQ)</span>
-                  </h2>
-                  <div className="space-y-3">
-                    {service.faqs.map((faq, idx) => (
-                      <div key={idx} className="p-5 sm:p-6 theme-card bg-card border border-border space-y-2">
-                        <h3 className="text-sm font-bold text-foreground">{faq.question}</h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <ServiceFaqAccordion
+                  faqs={service.faqs}
+                  serviceTitle={service.title}
+                />
               )}
 
             </div>
 
-            {/* Right Column: Sticky Pricing & Action Card */}
-            <div className="lg:col-span-4 space-y-6">
-              <div className="sticky top-24 theme-card bg-card/95 backdrop-blur-md p-6 sm:p-8 space-y-6 border border-primary/20">
-                <div className="space-y-2">
-                  <span className="text-xs font-semibold text-muted-foreground block">
-                    Investasi Pembuatan:
-                  </span>
-                  <div className="theme-text text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
-                    {service.priceStartingFrom || "Sesuai Kebutuhan"}
+            {/* Right Column: Sticky Pricing & Action Card on Desktop */}
+            <div className="lg:col-span-4 relative">
+              <div className="lg:sticky lg:top-24 space-y-6">
+                <div className="theme-card bg-card/95 backdrop-blur-md p-6 sm:p-8 space-y-6 border border-primary/20">
+                  <div className="space-y-2">
+                    <span className="text-xs font-semibold text-muted-foreground block">
+                      Investasi Pembuatan:
+                    </span>
+                    <div className="theme-text text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
+                      {service.priceStartingFrom || "Sesuai Kebutuhan"}
+                    </div>
+                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5">
+                      <ShieldCheck className="size-4" />
+                      Garansi Desain & Domain 1 Th
+                    </span>
                   </div>
-                  <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1.5">
-                    <ShieldCheck className="size-4" />
-                    Garansi Desain & Domain 1 Th
-                  </span>
-                </div>
 
-                <div className="border-t border-border/80 pt-4 space-y-3 text-xs text-muted-foreground">
-                  <div className="flex items-center justify-between">
-                    <span>Estimasi Waktu:</span>
-                    <span className="font-bold text-foreground">{service.deliveryTime}</span>
+                  <div className="border-t border-border/80 pt-4 space-y-3 text-xs text-muted-foreground">
+                    <div className="flex items-center justify-between">
+                      <span>Estimasi Waktu:</span>
+                      <span className="font-bold text-foreground">{service.deliveryTime}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>Domain & Hosting:</span>
+                      <span className="font-bold text-emerald-600">Gratis Tahun Ke-1</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span>Konsultasi Awal:</span>
+                      <span className="font-bold text-foreground">100% Gratis</span>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span>Domain & Hosting:</span>
-                    <span className="font-bold text-emerald-600">Gratis Tahun Ke-1</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span>Konsultasi Awal:</span>
-                    <span className="font-bold text-foreground">100% Gratis</span>
-                  </div>
-                </div>
 
-                <div className="pt-2 space-y-3">
-                  <a
-                    href={`https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20tertarik%20dengan%20layanan%20${encodeURIComponent(
-                      service.title
-                    )}.%20Boleh%20minta%20info%20dan%20tahap%20pemesanannya?`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm h-12 rounded-xl active:scale-[0.98] transition-all w-full"
-                  >
-                    <PhoneCall className="size-4.5" />
-                    <span>Pesan via WhatsApp</span>
-                  </a>
+                  <div className="pt-2 space-y-3">
+                    <a
+                      href={SITE_CONFIG.getWhatsappUrl(
+                        `Halo Solusi Berdigital, saya tertarik dengan layanan ${service.title}. Boleh minta info dan tahap pemesanannya?`
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm h-12 rounded-xl active:scale-[0.98] transition-all w-full"
+                    >
+                      <PhoneCall className="size-4.5" />
+                      <span>Pesan via WhatsApp</span>
+                    </a>
 
-                  <Link
-                    href="/portofolio"
-                    className="theme-btn inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs h-11 rounded-xl border border-border transition-colors w-full"
-                  >
-                    <span>Lihat Contoh Hasil Pengerjaan</span>
-                  </Link>
+                    <Link
+                      href="/portofolio"
+                      className="theme-btn inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs h-11 rounded-xl border border-border transition-colors w-full"
+                    >
+                      <span>Lihat Contoh Hasil Pengerjaan</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

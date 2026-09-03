@@ -6,6 +6,9 @@ import { Metadata } from "next";
 import { getBlogBySlug, getAllBlogs } from "@/lib/data-store";
 import { calculateReadingTime } from "@/lib/reading-time";
 import { getPublicImageUrl } from "@/lib/s3";
+import { BlogFaqAccordion } from "@/components/blog-faq-accordion";
+import { BlogDetailSchema } from "@/jsonLD";
+import { SITE_CONFIG } from "@/lib/site-config";
 import {
   ArrowLeft,
   ArrowRight,
@@ -27,6 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${blog.title} | Solusi Berdigital`,
     description: blog.excerpt,
+    openGraph: {
+      title: blog.title,
+      description: blog.excerpt,
+      images: blog.imagePath ? [getPublicImageUrl(blog.imagePath)] : undefined,
+    },
   };
 }
 
@@ -41,9 +49,15 @@ export default async function BlogDetailPage({ params }: Props) {
   const readTime = calculateReadingTime(blog.content);
   const allBlogs = await getAllBlogs({ onlyPublished: true });
   const relatedBlogs = allBlogs.filter((b) => b.id !== blog.id).slice(0, 2);
+  const publicImageUrl = blog.imagePath ? getPublicImageUrl(blog.imagePath) : undefined;
+  const faqList = (blog.blogFaqs || []).filter(
+    (faq) => faq.question?.trim() && faq.answer?.trim()
+  );
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden bg-noise">
+      <BlogDetailSchema blog={blog} publicImageUrl={publicImageUrl} />
+
       {/* Background Ambient Glow */}
       <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
         <div className="absolute top-10 right-1/4 w-[600px] h-[400px] bg-primary/15 rounded-full blur-[140px]" />
@@ -131,7 +145,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
             {/* Tags footer */}
             {blog.tags && blog.tags.length > 0 && (
-              <div className="pt-8 mt-8 border-t border-border flex flex-wrap items-center gap-2">
+              <div className="pt-6 border-t border-border flex flex-wrap items-center gap-2">
                 <span className="text-xs font-bold text-muted-foreground flex items-center gap-1 mr-2">
                   <Tag className="size-3.5" />
                   Tags:
@@ -146,6 +160,11 @@ export default async function BlogDetailPage({ params }: Props) {
                 ))}
               </div>
             )}
+
+            {/* Interactive FAQ Accordion for Article & SEO */}
+            {faqList.length > 0 && (
+              <BlogFaqAccordion faqs={faqList} />
+            )}
           </div>
 
           {/* Consultation CTA Banner */}
@@ -159,7 +178,9 @@ export default async function BlogDetailPage({ params }: Props) {
               </p>
             </div>
             <a
-              href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20sudah%20membaca%20artikel%20dan%20ingin%20konsultasi%20website"
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Halo Solusi Berdigital, saya sudah membaca artikel dan ingin konsultasi website"
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm px-6 h-12 rounded-2xl shrink-0 transition-all w-full sm:w-auto"

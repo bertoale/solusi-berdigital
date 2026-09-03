@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   PhoneCall,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -124,9 +125,9 @@ export default async function PortfolioDetailPage({ params }: Props) {
               </p>
             </div>
             <a
-              href={`https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20tertarik%20dengan%20proyek%20${encodeURIComponent(
-                portfolio.title
-              )}%20dan%20ingin%20membuat%20website%20serupa.`}
+              href={SITE_CONFIG.getWhatsappUrl(
+                `Halo Solusi Berdigital, saya tertarik dengan proyek ${portfolio.title} dan ingin membuat website serupa.`
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm px-6 h-12 rounded-2xl shrink-0 transition-all w-full sm:w-auto"

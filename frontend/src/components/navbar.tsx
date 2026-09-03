@@ -5,15 +5,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SITE_CONFIG } from "@/lib/site-config";
+import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // If in admin dashboard, let AdminLayout render its own specialized admin topbar/sidebar
-  if (pathname?.startsWith("/admin")) {
+  // Jika berada di admin dashboard atau halaman login, Navbar publik disembunyikan
+  if (pathname?.startsWith("/admin") || pathname === "/login") {
     return null;
   }
 
@@ -22,8 +23,6 @@ export function Navbar() {
     { label: "Layanan", href: "/layanan" },
     { label: "Portofolio", href: "/portofolio" },
     { label: "Blog", href: "/blog" },
-    { label: "Cara Kerja", href: "/#cara-kerja" },
-    { label: "FAQ", href: "/#faq" },
   ];
 
   return (
@@ -56,19 +55,22 @@ export function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-muted-foreground">
           {navLinks.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname?.startsWith(link.href);
+            const isAnchor = link.href.includes("#");
+            const isActive = isAnchor
+              ? false
+              : link.href === "/"
+              ? pathname === "/"
+              : pathname?.startsWith(link.href);
+
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-colors",
+                  "px-3.5 py-1.5 rounded-xl transition-all text-xs font-bold",
                   isActive
-                    ? "text-foreground font-semibold bg-muted/80"
-                    : "hover:text-foreground hover:bg-muted/50"
+                    ? "text-primary bg-primary/10 border border-primary/20 theme-pill"
+                    : "hover:text-foreground hover:bg-muted/60"
                 )}
               >
                 {link.label}
@@ -77,15 +79,15 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Desktop CTA Action Button styled with Shadcn buttonVariants */}
+        {/* Desktop CTA Action Button */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20pembuatan%20website"
+            href={SITE_CONFIG.getWhatsappUrl("Halo Solusi Berdigital, saya ingin konsultasi pembuatan website")}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2"
+              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2 theme-btn"
             )}
           >
             {/* WhatsApp Icon */}
@@ -106,7 +108,7 @@ export function Navbar() {
           variant="ghost"
           size="icon"
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-foreground"
+          className="md:hidden text-foreground cursor-pointer"
           aria-label="Toggle navigation menu"
         >
           {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -117,26 +119,40 @@ export function Navbar() {
       {isOpen && (
         <div className="md:hidden border-b border-border bg-background px-4 pt-3 pb-6 space-y-4">
           <nav className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground px-3 py-2 rounded-lg hover:bg-muted/60 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isAnchor = link.href.includes("#");
+              const isActive = isAnchor
+                ? false
+                : link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    "text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors",
+                    isActive
+                      ? "text-primary bg-primary/10 border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
           <div className="pt-2 border-t border-border">
             <a
-              href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20pembuatan%20website"
+              href={SITE_CONFIG.getWhatsappUrl("Halo Solusi Berdigital, saya ingin konsultasi pembuatan website")}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
               className={cn(
                 buttonVariants({ variant: "default" }),
-                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2"
+                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2 theme-btn"
               )}
             >
               <span>Chat WhatsApp Sekarang</span>

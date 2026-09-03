@@ -4,8 +4,6 @@ import bcrypt from "bcryptjs";
 
 const ADMIN_COOKIE_NAME = "sb_admin_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 hari dalam detik
-const DEFAULT_AUTH_SECRET = "sb-secret-key-solusi-berdigital-fallback-2026";
-
 export interface AdminSession {
   email: string;
   name: string;
@@ -15,7 +13,11 @@ export interface AdminSession {
 }
 
 function getAuthSecret(): string {
-  return process.env.AUTH_SECRET || DEFAULT_AUTH_SECRET;
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) {
+    throw new Error("AUTH_SECRET environment variable is missing! Please configure it in .env.");
+  }
+  return secret;
 }
 
 /**
@@ -59,16 +61,6 @@ function verifySignature(payload: string, signature: string): boolean {
   return crypto.timingSafeEqual(sigBuf, expBuf);
 }
 
-/**
- * Kredensial default dari environment
- */
-export function getAdminCredentials() {
-  return {
-    email: process.env.ADMIN_EMAIL || "admin@solusiberdigital.id",
-    password: process.env.ADMIN_PASSWORD || "adminpassword123",
-    name: process.env.ADMIN_NAME || "Administrator Solusi Berdigital",
-  };
-}
 
 /**
  * Membaca dan memvalidasi sesi admin dari cookie terenkripsi/tertanda tangan kriptografis

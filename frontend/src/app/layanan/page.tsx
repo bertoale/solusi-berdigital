@@ -7,6 +7,7 @@ import {
   Store,
   Megaphone,
   Calculator,
+  Database,
   ArrowRight,
   CheckCircle2,
   ShieldCheck,
@@ -14,11 +15,12 @@ import {
   Layers,
   PhoneCall,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Layanan Pembuatan Website & Sistem Bisnis | Solusi Berdigital",
   description:
-    "Pilihan layanan website profil perusahaan, toko online katalog WhatsApp, landing page iklan konversi tinggi, dan aplikasi kasir POS siap pakai.",
+    "Pilihan layanan website profil perusahaan, toko online katalog WhatsApp, landing page promosi produk, dan sistem informasi bisnis/inventory kustom.",
 };
 
 const iconMap: Record<string, typeof Building2> = {
@@ -26,6 +28,7 @@ const iconMap: Record<string, typeof Building2> = {
   Store,
   Megaphone,
   Calculator,
+  Database,
 };
 
 export default async function LayananPage() {
@@ -54,7 +57,7 @@ export default async function LayananPage() {
               <span className="theme-text-primary text-primary">Karakter Bisnis Anda</span>
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed text-balance">
-              Mulai dari penguatan kredibilitas brand, peningkatan omzet ritel tanpa komisi, hingga otomatisasi rekap kasir harian. Semua paket dirancang siap pakai dan mudah dioperasikan.
+              Mulai dari penguatan kredibilitas brand, peningkatan omzet ritel tanpa komisi, hingga sistem inventory & operasional bisnis. Semua paket dirancang siap pakai dan mudah dioperasikan.
             </p>
           </div>
         </div>
@@ -138,9 +141,9 @@ export default async function LayananPage() {
                         <span>Lihat Detail</span>
                       </Link>
                       <a
-                        href={`https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20tertarik%20dengan%20layanan%20${encodeURIComponent(
-                          service.title
-                        )}`}
+                        href={SITE_CONFIG.getWhatsappUrl(
+                          `Halo Solusi Berdigital, saya tertarik dengan layanan ${service.title}`
+                        )}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="theme-btn inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs px-5 h-11 rounded-xl transition-all flex-1 sm:flex-initial"
@@ -170,7 +173,9 @@ export default async function LayananPage() {
               </p>
             </div>
             <a
-              href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20sistem%20kustom"
+              href={SITE_CONFIG.getWhatsappUrl(
+                "Halo Solusi Berdigital, saya ingin konsultasi sistem kustom"
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl shrink-0 transition-all w-full sm:w-auto"

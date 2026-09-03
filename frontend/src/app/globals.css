@@ -209,3 +209,76 @@
 .animate-timeline-beam-v {
   animation: beamVertical 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* ========================================================================= */
+/* CLEAN MODERN ADMIN PANEL STYLING (TANPA THEME TACTILE / 3D / CLAYMORPHISM) */
+/* ========================================================================= */
+.admin-panel {
+  /* Reset radius ke standar clean UI */
+  --radius: 0.5rem;
+}
+
+.admin-panel h1,
+.admin-panel h2,
+.admin-panel .theme-text,
+.admin-panel .theme-text-primary,
+.admin-panel .theme-text-warning,
+.admin-panel .theme-text-inset {
+  text-shadow: none !important;
+}
+
+.admin-panel .theme-card,
+.admin-panel .theme-card-flat {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.05) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0.75rem !important;
+  backdrop-filter: none !important;
+  transform: none !important;
+}
+
+.admin-panel .theme-card:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05) !important;
+  transform: none !important;
+}
+
+.admin-panel .theme-btn {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+  border-radius: 0.5rem !important;
+  transform: none !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.admin-panel .theme-btn:hover {
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08) !important;
+  transform: none !important;
+}
+
+.admin-panel .theme-btn:active {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.admin-panel .theme-inset {
+  box-shadow: none !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0.5rem !important;
+}
+
+.admin-panel .theme-pill {
+  box-shadow: none !important;
+  border-radius: 9999px !important;
+}
+
+.admin-panel .input-field-error {
+  border-color: var(--destructive) !important;
+  background-color: oklch(0.98 0.02 25 / 0.4) !important;
+  outline: 2px solid var(--destructive) !important;
+  outline-offset: 1px !important;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}

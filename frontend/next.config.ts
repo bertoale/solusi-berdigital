@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+  env: {
+    IMAGE_BASE_URL: process.env.IMAGE_BASE_URL || "",
+    S3_ENDPOINT: process.env.S3_ENDPOINT || "",
+    S3_BUCKET: process.env.S3_BUCKET || "",
+    WHATSAPP: process.env.WHATSAPP || "6285858089376",
+    EMAIL: process.env.EMAIL || "bertoale.dev@gmail.com",
+  },
   images: {
     remotePatterns: [
       {

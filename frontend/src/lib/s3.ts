@@ -1,13 +1,13 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-const endpoint = process.env.S3_ENDPOINT || "https://s3.nevaobjects.id";
-const bucket = process.env.S3_BUCKET || "ollaaa-bali-hire";
-const accessKey = process.env.S3_ACCESS_KEY || "example";
-const secretKey = process.env.S3_SECRET_KEY || "example";
+const endpoint = process.env.S3_ENDPOINT || "";
+const bucket = process.env.S3_BUCKET || "";
+const accessKey = process.env.S3_ACCESS_KEY || "";
+const secretKey = process.env.S3_SECRET_KEY || "";
 
-// S3 Client configured for S3-compatible Object Storage (NevaObjects)
+// S3 Client configured for S3-compatible Object Storage
 export const s3Client = new S3Client({
-  endpoint,
+  endpoint: endpoint || undefined,
   region: "auto",
   credentials: {
     accessKeyId: accessKey,
@@ -27,6 +27,10 @@ export async function uploadBufferToS3(
   key: string,
   contentType = "image/webp"
 ): Promise<{ success: boolean; imagePath: string }> {
+  if (!bucket) {
+    throw new Error("S3_BUCKET is not set in environment variables!");
+  }
+
   // Bersihkan leading slash dari key untuk S3 object key
   const cleanKey = key.startsWith("/") ? key.slice(1) : key;
 
@@ -60,13 +64,17 @@ export function getPublicImageUrl(imagePath: string | null | undefined): string 
     return imagePath;
   }
 
-  const s3BaseEndpoint =
-    process.env.NEXT_PUBLIC_S3_ENDPOINT || process.env.S3_ENDPOINT || "https://s3.nevaobjects.id";
-  const s3BucketName =
-    process.env.NEXT_PUBLIC_S3_BUCKET || process.env.S3_BUCKET || "ollaaa-bali-hire";
+  const imageBase = (
+    process.env.IMAGE_BASE_URL ||
+    (process.env.S3_ENDPOINT && process.env.S3_BUCKET
+      ? `${process.env.S3_ENDPOINT.replace(/\/+$/, "")}/${process.env.S3_BUCKET}`
+      : "")
+  ).replace(/\/+$/, "");
+
+  if (!imageBase) {
+    return imagePath;
+  }
 
   const cleanPath = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
-  const baseUrl = s3BaseEndpoint.replace(/\/+$/, "");
-
-  return `${baseUrl}/${s3BucketName}/${cleanPath}`;
+  return `${imageBase}/${cleanPath}`;
 }

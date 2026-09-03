@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowRight, CheckCircle, ShieldCheck } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface HeroSectionProps {
   backgroundImageUrl?: string;
@@ -13,7 +14,9 @@ interface HeroSectionProps {
 export function HeroSection({
   backgroundImageUrl = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80",
   cutoutImageUrl = "/side-hello.png",
-  whatsappUrl = "https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20pembuatan%20website%20untuk%20meningkatkan%20penjualan%20bisnis%20saya.",
+  whatsappUrl = SITE_CONFIG.getWhatsappUrl(
+    "Halo Solusi Berdigital, saya ingin konsultasi pembuatan website untuk meningkatkan penjualan bisnis saya."
+  ),
 }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden bg-background min-h-[580px] lg:min-h-[640px] flex items-center border-b border-border/60">

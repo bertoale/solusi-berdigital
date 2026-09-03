@@ -1,6 +1,6 @@
 -- ============================================================================
 -- TABEL: blogs
--- Deskripsi: Menyimpan artikel, edukasi, dan wawasan bisnis digital
+-- Deskripsi: Menyimpan artikel, edukasi, wawasan bisnis digital, dan FAQ SEO
 -- ============================================================================
 
 CREATE TABLE IF NOT EXISTS `blogs` (
@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   `author` VARCHAR(100) NOT NULL DEFAULT 'Tim Solusi Berdigital',
   `image_path` TEXT NULL COMMENT 'Path Gambar Cover di S3, e.g. /blog/172530000-sample.webp',
   `tags` JSON NULL COMMENT 'Array tag string JSON',
+  `blog_faqs` JSON NULL COMMENT 'Array JSON FAQ [{question, answer}] untuk skema JSON-LD FAQPage',
   `is_published` BOOLEAN NOT NULL DEFAULT TRUE,
   `published_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

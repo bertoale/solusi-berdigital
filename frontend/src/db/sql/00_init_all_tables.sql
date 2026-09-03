@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `blog_categories` (
   UNIQUE KEY `uk_blog_categories_slug` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 6. Tabel Artikel Blog (image_path)
+-- 6. Tabel Artikel Blog (image_path & blog_faqs)
 CREATE TABLE IF NOT EXISTS `blogs` (
   `id` VARCHAR(128) NOT NULL,
   `slug` VARCHAR(128) NOT NULL,
@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `blogs` (
   `author` VARCHAR(100) NOT NULL DEFAULT 'Tim Solusi Berdigital',
   `image_path` TEXT NULL COMMENT 'Path Gambar Cover di S3, e.g. /blog/172530000-sample.webp',
   `tags` JSON NULL COMMENT 'Array tag string JSON',
+  `blog_faqs` JSON NULL COMMENT 'Array JSON FAQ [{question, answer}] untuk skema JSON-LD FAQPage',
   `is_published` BOOLEAN NOT NULL DEFAULT TRUE,
   `published_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

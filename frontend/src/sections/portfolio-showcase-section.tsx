@@ -7,6 +7,7 @@ import {
   ChevronRight,
   ShieldCheck,
 } from "lucide-react"
+import { SITE_CONFIG } from "@/lib/site-config"
 
 interface ShowcaseItem {
   id: string
@@ -213,9 +214,9 @@ export function PortfolioShowcaseSection() {
             {/* Inquire for similar model button */}
             <div className="pt-4 border-t border-border/80">
               <a
-                href={`https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20tertarik%20dengan%20model%20website%20seperti%20${encodeURIComponent(
-                  current.title
-                )}%20(${encodeURIComponent(current.category)})`}
+                href={SITE_CONFIG.getWhatsappUrl(
+                  `Halo Solusi Berdigital, saya tertarik dengan model website seperti ${current.title} (${current.category})`
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-xs px-5 h-10 rounded-lg border border-border transition-colors w-full sm:w-auto"

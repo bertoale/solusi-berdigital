@@ -7,19 +7,22 @@ import {
   MessageSquare,
   CheckCircle2,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface CTASectionProps {
   whatsappUrl?: string;
 }
 
 export function CTASection({
-  whatsappUrl = "https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20ingin%20konsultasi%20pembuatan%20website%20untuk%20bisnis%20saya.",
+  whatsappUrl = SITE_CONFIG.getWhatsappUrl(
+    "Halo Solusi Berdigital, saya ingin konsultasi pembuatan website untuk bisnis saya."
+  ),
 }: CTASectionProps) {
   const quickTopics = [
     "Website Company Profile",
     "Toko Online WhatsApp",
     "Landing Page Iklan",
-    "Sistem Kasir (POS)",
+    "Sistem Bisnis & Inventory",
   ];
 
   return (
@@ -159,9 +162,7 @@ export function CTASection({
                   {quickTopics.map((topic, idx) => (
                     <a
                       key={idx}
-                      href={`https://wa.me/6285858089376?text=Halo%20saya%20ingin%20konsultasi%20tentang%20${encodeURIComponent(
-                        topic
-                      )}`}
+                      href={SITE_CONFIG.getWhatsappUrl(`Halo saya ingin konsultasi tentang ${topic}`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between p-3.5 rounded-xl bg-primary-foreground/12 hover:bg-[#25D366] hover:text-white border border-primary-foreground/20 hover:border-[#25D366] text-xs sm:text-sm font-bold text-primary-foreground transition-all group/item shadow-sm hover:shadow-lg hover:shadow-[#25D366]/20"

@@ -1,0 +1,18 @@
+services:
+  frontend:
+    image: bertoale72/solusi-berdigital-frontend:latest
+    container_name: solusi-berdigital-frontend
+    restart: unless-stopped
+    env_file:
+      - ./frontend/.env
+    expose:
+      - "3000"
+    networks:
+      - default
+      - mysql_network
+
+networks:
+  default:
+  mysql_network:
+    name: mysql_network
+    external: true

@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
       author: body.author || "Tim Solusi Berdigital",
       imagePath: body.imagePath || null,
       tags: Array.isArray(body.tags) ? body.tags : ["Bisnis Digital"],
+      blogFaqs: Array.isArray(body.blogFaqs) ? body.blogFaqs : [],
       isPublished: body.isPublished ?? true,
       publishedAt: new Date(),
     });

@@ -5,13 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
+import { SITE_CONFIG } from "@/lib/site-config";
 import { PhoneCall, Mail, MapPin, Lock } from "lucide-react";
 
 export function Footer() {
   const pathname = usePathname();
 
-  // If in admin dashboard, hide public footer
-  if (pathname?.startsWith("/admin")) {
+  // Jika berada di admin dashboard atau halaman login, sembunyikan footer publik
+  if (pathname?.startsWith("/admin") || pathname === "/login") {
     return null;
   }
 
@@ -76,10 +77,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/layanan/aplikasi-kasir-pos"
+                  href="/layanan/sistem-bisnis-kustom"
                   className="hover:text-foreground transition-colors block py-0.5"
                 >
-                  Sistem Kasir & POS
+                  Sistem Bisnis & Inventory
                 </Link>
               </li>
             </ul>
@@ -127,27 +128,32 @@ export function Footer() {
           </div>
 
           {/* Col 4: Kontak & WhatsApp Direct */}
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             <h4 className="font-bold text-sm text-foreground tracking-tight">
               Hubungi Kami
             </h4>
-            <div className="space-y-2.5 text-xs sm:text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <PhoneCall className="size-4 text-whatsapp shrink-0" />
+            <div className="space-y-3 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex flex-col gap-2">
                 <a
-                  href="https://wa.me/6285858089376"
+                  href={SITE_CONFIG.getWhatsappUrl(
+                    "Halo Solusi Berdigital, saya ingin konsultasi layanan digital."
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors font-semibold"
+                  className="theme-btn inline-flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs px-4 h-9.5 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto shadow-xs"
                 >
-                  +62 858-5808-9376
+                  <PhoneCall className="size-3.5 shrink-0" />
+                  <span>Chat via WhatsApp</span>
+                </a>
+                <a
+                  href={SITE_CONFIG.getMailtoUrl("Konsultasi Layanan Solusi Berdigital")}
+                  className="theme-btn inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-9.5 rounded-xl border border-border transition-colors w-full sm:w-auto shadow-xs"
+                >
+                  <Mail className="size-3.5 text-primary shrink-0" />
+                  <span>Kirim Email</span>
                 </a>
               </div>
-              <div className="flex items-center gap-2">
-                <Mail className="size-4 text-primary shrink-0" />
-                <span>halo@solusiberdigital.id</span>
-              </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 pt-1">
                 <MapPin className="size-4 text-primary shrink-0 mt-0.5" />
                 <span>Badung, Bali & Layanan Online Seluruh Indonesia</span>
               </div>
@@ -166,7 +172,7 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <Link
-              href="/admin/login"
+              href="/login"
               className="inline-flex items-center gap-1 hover:text-foreground transition-colors text-[11px] opacity-70 hover:opacity-100"
             >
               <Lock className="size-3" />

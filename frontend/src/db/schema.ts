@@ -69,8 +69,13 @@ export type PortfolioCategory = typeof portfolioCategories.$inferSelect;
 export type NewPortfolioCategory = typeof portfolioCategories.$inferInsert;
 
 // ==========================================
-// 5. BLOGS TABLE (Artikel & Tips - imagePath)
+// 5. BLOGS TABLE (Artikel & Tips - imagePath & blog_faqs)
 // ==========================================
+export interface BlogFaqItem {
+  question: string;
+  answer: string;
+}
+
 export const blogs = mysqlTable("blogs", {
   id: varchar("id", { length: 128 }).primaryKey(),
   slug: varchar("slug", { length: 128 }).notNull().unique(),
@@ -81,6 +86,7 @@ export const blogs = mysqlTable("blogs", {
   author: varchar("author", { length: 100 }).default("Tim Solusi Berdigital").notNull(),
   imagePath: text("image_path"),
   tags: json("tags").$type<string[]>().default([]),
+  blogFaqs: json("blog_faqs").$type<BlogFaqItem[]>().default([]),
   isPublished: boolean("is_published").default(true).notNull(),
   publishedAt: timestamp("published_at").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

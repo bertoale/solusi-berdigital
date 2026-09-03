@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Portofolio & Hasil Pengerjaan | Solusi Berdigital",
@@ -165,9 +166,9 @@ export default async function PortofolioPage({
                       </Link>
 
                       <a
-                        href={`https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20tertarik%20dengan%20proyek%20${encodeURIComponent(
-                          item.title
-                        )}`}
+                        href={SITE_CONFIG.getWhatsappUrl(
+                          `Halo Solusi Berdigital, saya tertarik dengan proyek ${item.title}`
+                        )}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="theme-btn inline-flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-11 rounded-xl border border-border transition-colors"

@@ -6,100 +6,23 @@ import {
   Building2,
   Store,
   Megaphone,
-  Calculator,
+  Database,
   ArrowRight,
   CheckCircle2,
   PhoneCall,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import Link from "next/link";
+import { staticServices } from "@/lib/services-data";
+import { SITE_CONFIG } from "@/lib/site-config";
 
-interface ServiceItem {
-  id: string;
-  title: string;
-  category: string;
-  badgeText?: string;
-  shortDesc: string;
-  icon: typeof Building2;
-  recommendedFor: string;
-  deliveryTime: string;
-  features: string[];
-}
-
-const services: ServiceItem[] = [
-  {
-    id: "company-profile",
-    title: "Website Profil Perusahaan (Company Profile)",
-    category: "Branding & Kredibilitas",
-    badgeText: "Paling Populer",
-    shortDesc:
-      "Tingkatkan wibawa usaha dan kepercayaan calon klien dengan website profil yang elegan, cepat dibuka, dan terdaftar resmi di Google Maps.",
-    icon: Building2,
-    recommendedFor:
-      "Perusahaan B2B, Kontraktor, Klinik & Faskes, Kantor Hukum, Konsultan, Yayasan, Sekolah, Pabrik, & UMKM Berkembang",
-    deliveryTime: "Estimasi: 3 - 5 Hari Kerja",
-    features: [
-      "Halaman Beranda, Tentang Kami, Layanan, Portofolio & Kontak",
-      "Tombol WhatsApp interaktif & Integrasi Google Maps",
-      "Gratis Domain (.com) & Server Cloud Hosting 1 Tahun Pertama",
-      "Desain responsif sempurna di Android, iPhone, Tablet & Laptop",
-    ],
-  },
-  {
-    id: "online-store",
-    title: "Toko Online & Katalog WhatsApp",
-    category: "Penjualan & Retail",
-    badgeText: "Tingkatkan Order",
-    shortDesc:
-      "Pamerkan produk dengan katalog foto rapi tanpa repot koding. Pelanggan bisa memilih barang dan pesanan langsung otomatis masuk ke WhatsApp Anda.",
-    icon: Store,
-    recommendedFor:
-      "Fashion & Hijab, Kuliner & Frozen Food, Skincare, Grosir, Distributor, Retailer, Toko Bangunan, Sparepart, & Toko Oleh-oleh",
-    deliveryTime: "Estimasi: 4 - 7 Hari Kerja",
-    features: [
-      "Katalog produk dengan foto jernih, harga promo, & variasi ukuran/warna",
-      "Sistem checkout praktis langsung merangkum format order ke WA",
-      "Halaman admin super simpel untuk upload produk baru langsung dari HP",
-      "Bebas biaya komisi penjualan per transaksi (100% omzet milik Anda)",
-    ],
-  },
-  {
-    id: "landing-page",
-    title: "Landing Page Iklan & Promosi (High-Converting)",
-    category: "Marketing & Iklan",
-    badgeText: "Cocok Iklan Ads",
-    shortDesc:
-      "Halaman khusus satu produk atau promo berorientasi penjualan tinggi. Sangat ringan dan siap disambungkan ke iklan Facebook, Instagram, TikTok & Google Ads.",
-    icon: Megaphone,
-    recommendedFor:
-      "Pengiklan Meta & Google Ads, Produk Herbal, Properti & Agen, Kursus/Pelatihan, Event & Seminar, Jasa Service, & Produk Viral",
-    deliveryTime: "Estimasi: 2 - 4 Hari Kerja",
-    features: [
-      "Struktur copywriting persuasif yang memicu aksi beli cepat",
-      "Struktur kode ringan teroptimasi PageSpeed tinggi",
-      "Pemasangan Meta Pixel & Google Analytics siap pakai",
-      "Tombol Call-to-Action (CTA) bertebaran strategis di sepanjang halaman",
-    ],
-  },
-  {
-    id: "custom-system",
-    title: "Aplikasi Kasir (POS) & Sistem Bisnis Kustom",
-    category: "Operasional & Otomasi",
-    badgeText: "Otomatisasi Usaha",
-    shortDesc:
-      "Ucapkan selamat tinggal pada catatan manual di buku. Pantau stok barang, catat omzet harian kasir, dan lihat laporan keuntungan dari mana saja.",
-    icon: Calculator,
-    recommendedFor:
-      "Resto & Cafe, Minimarket, Apotek, Bengkel, Toko Bangunan, Salon/Barbershop, Petshop, Ekspedisi, & Manajemen Stok Multi-Cabang",
-    deliveryTime: "Estimasi: 7 - 14 Hari Kerja",
-    features: [
-      "Sistem kasir (Point of Sale) cetak struk & scan barcode",
-      "Manajemen stok barang masuk & sisa stok gudang secara real-time",
-      "Akses bertingkat dengan keamanan PIN (Kasir, Supervisor, Owner)",
-      "Laporan penjualan & grafik keuntungan harian, mingguan, bulanan",
-    ],
-  },
-];
+const iconMap: Record<string, typeof Building2> = {
+  Building2,
+  Store,
+  Megaphone,
+  Database,
+};
 
 export function ServicesSection() {
   return (
@@ -124,10 +47,32 @@ export function ServicesSection() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M50 0V400M150 0V400M250 0V400M350 0V400" stroke="currentColor" strokeWidth="1" strokeDasharray="4 8" />
-          <path d="M0 50H400M0 150H400M0 250H400M0 350H400" stroke="currentColor" strokeWidth="1" strokeDasharray="4 8" />
-          <circle cx="250" cy="150" r="4" fill="var(--color-warning)" fillOpacity="0.4" />
-          <circle cx="150" cy="250" r="4" fill="var(--color-primary)" fillOpacity="0.3" />
+          <path
+            d="M50 0V400M150 0V400M250 0V400M350 0V400"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeDasharray="4 8"
+          />
+          <path
+            d="M0 50H400M0 150H400M0 250H400M0 350H400"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeDasharray="4 8"
+          />
+          <circle
+            cx="250"
+            cy="150"
+            r="4"
+            fill="var(--color-warning)"
+            fillOpacity="0.4"
+          />
+          <circle
+            cx="150"
+            cy="250"
+            r="4"
+            fill="var(--color-primary)"
+            fillOpacity="0.3"
+          />
         </svg>
 
         {/* Edge Fade transitions */}
@@ -136,7 +81,6 @@ export function ServicesSection() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-        
         {/* Section Header with Side Image */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-12 sm:mb-16">
           <div className="lg:col-span-7 xl:col-span-7 space-y-4">
@@ -145,7 +89,9 @@ export function ServicesSection() {
             </h2>
 
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground text-balance leading-relaxed">
-              Semua paket sudah termasuk domain .com & server cloud hosting cepat tahun pertama, desain rapi, serta panduan bantuan pemakaian sampai Anda lancar menggunakannya.
+              Paket website sudah mencakup domain .com dan cloud hosting tahun
+              pertama, desain responsif, panduan penggunaan, serta dukungan
+              teknis selama masa garansi.
             </p>
           </div>
 
@@ -168,8 +114,8 @@ export function ServicesSection() {
 
         {/* Uniform Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {services.map((service) => {
-            const Icon = service.icon;
+          {staticServices.map((service) => {
+            const Icon = iconMap[service.iconName] || Building2;
             return (
               <div
                 key={service.id}
@@ -197,15 +143,23 @@ export function ServicesSection() {
 
                   {/* Title & Icon Header */}
                   <div className="flex items-start gap-4">
-                    <div className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 text-primary group-hover:scale-105 transition-transform">
+                    <Link
+                      href={`/layanan/${service.slug}`}
+                      className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 text-primary group-hover:scale-105 transition-transform"
+                    >
                       <Icon className="size-6" />
-                    </div>
+                    </Link>
                     <div className="space-y-1">
-                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground leading-snug group-hover:text-primary transition-colors">
-                        {service.title}
-                      </h3>
+                      <Link href={`/layanan/${service.slug}`} className="block">
+                        <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground leading-snug group-hover:text-primary transition-colors">
+                          {service.title}
+                        </h3>
+                      </Link>
                       <div className="text-xs sm:text-sm text-primary font-semibold leading-relaxed">
-                        Cocok untuk: <span className="text-muted-foreground font-normal">{service.recommendedFor}</span>
+                        Cocok untuk:{" "}
+                        <span className="text-muted-foreground font-normal">
+                          {service.recommendedFor}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -221,8 +175,11 @@ export function ServicesSection() {
                       Fasilitas Lengkap yang Anda Dapatkan:
                     </div>
                     <ul className="space-y-2.5">
-                      {service.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-foreground/90">
+                      {service.features.slice(0, 4).map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2.5 text-xs sm:text-sm text-foreground/90"
+                        >
                           <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
                           <span className="leading-snug">{feature}</span>
                         </li>
@@ -233,14 +190,17 @@ export function ServicesSection() {
 
                 {/* Card Action Footer */}
                 <div className="pt-6 mt-6 border-t border-border/70 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                  <div className="text-xs text-muted-foreground font-medium hidden sm:flex items-center gap-1.5">
-                    <CheckCircle2 className="size-3.5 text-emerald-500 shrink-0" />
-                    <span>Garansi Penyesuaian Desain & Bantuan Teknis</span>
-                  </div>
+                  <Link
+                    href={`/layanan/${service.slug}`}
+                    className="text-xs font-semibold text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 py-1"
+                  >
+                    <span>Lihat Detail Lengkap</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
                   <a
-                    href={`https://wa.me/6285858089376?text=Halo%20saya%20tertarik%20dengan%20layanan%20${encodeURIComponent(
-                      service.title
-                    )}.%20Boleh%20minta%20info%20lebih%20lengkapnya?`}
+                    href={SITE_CONFIG.getWhatsappUrl(
+                      `Halo saya tertarik dengan layanan ${service.title}. Boleh minta info lebih lengkapnya?`
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 theme-btn bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs sm:text-sm px-6 h-11 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto"
@@ -265,12 +225,16 @@ export function ServicesSection() {
               Belum tahu paket mana yang paling pas untuk bisnis Anda?
             </h4>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Ceritakan ide produk atau usaha Anda kepada tim kami via WhatsApp. Kami akan berikan rekomendasi struktur website terbaik beserta estimasi anggarannya.
+              Ceritakan ide produk atau usaha Anda kepada tim kami via WhatsApp.
+              Kami akan berikan rekomendasi struktur website terbaik beserta
+              estimasi anggarannya.
             </p>
           </div>
 
           <a
-            href="https://wa.me/6285858089376?text=Halo%20saya%20mau%20tanya%20rekomendasi%20paket%20website%20yang%20cocok%20untuk%20usaha%20saya"
+            href={SITE_CONFIG.getWhatsappUrl(
+              "Halo saya mau tanya rekomendasi paket website yang cocok untuk usaha saya"
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl active:scale-[0.98] shrink-0 transition-all w-full sm:w-auto"
@@ -279,7 +243,6 @@ export function ServicesSection() {
             <span>Tanya Rekomendasi via WhatsApp</span>
           </a>
         </div>
-
       </div>
     </section>
   );

@@ -1,4 +1,25 @@
+import { eq, desc, asc, and, like, or } from "drizzle-orm";
+import { db } from "@/db";
 import {
+  users,
+  User,
+  portfolios,
+  Portfolio,
+  portfolioImages,
+  PortfolioImage,
+  PortfolioWithImages,
+  portfolioCategories,
+  PortfolioCategory,
+  blogs,
+  Blog,
+  blogCategories,
+  BlogCategory,
+  BlogFaqItem,
+} from "@/db/schema";
+import { staticServices, StaticService } from "./services-data";
+
+// Re-export Schema Types for Convenience
+export type {
   User,
   Portfolio,
   PortfolioImage,
@@ -6,28 +27,8 @@ import {
   PortfolioCategory,
   Blog,
   BlogCategory,
-} from "@/db/schema";
-import { staticServices, StaticService } from "./services-data";
-
-// Global in-memory cache to persist across Server Actions / HMR during Node runtime
-declare global {
-  var __SB_USERS__: User[] | undefined;
-  var __SB_PORTFOLIOS__: Portfolio[] | undefined;
-  var __SB_PORTFOLIO_IMAGES__: PortfolioImage[] | undefined;
-  var __SB_PORTFOLIO_CATEGORIES__: PortfolioCategory[] | undefined;
-  var __SB_BLOGS__: Blog[] | undefined;
-  var __SB_BLOG_CATEGORIES__: BlogCategory[] | undefined;
-}
-
-// ============================================================================
-// 0. USERS REPOSITORY (KOSONG, DIISI MANUAL/VIA DATABASE)
-// ============================================================================
-const initialUsers: User[] = [];
-
-export async function findUserByEmail(email: string): Promise<User | null> {
-  const list = globalThis.__SB_USERS__ ?? initialUsers;
-  return list.find((u) => u.email.toLowerCase() === email.toLowerCase().trim()) || null;
-}
+  BlogFaqItem,
+};
 
 // ============================================================================
 // 1. STATIC SERVICES (READ-ONLY)
@@ -37,184 +38,286 @@ export async function getAllServices(): Promise<StaticService[]> {
 }
 
 export async function getServiceBySlug(slug: string): Promise<StaticService | null> {
-  return staticServices.find((s) => s.slug === slug) || null;
+  return (
+    staticServices.find(
+      (s) =>
+        s.slug === slug ||
+        (s.id === "srv-custom-system" && slug === "aplikasi-kasir-pos")
+    ) || null
+  );
 }
 
 export async function getServiceById(id: string): Promise<StaticService | null> {
-  return staticServices.find((s) => s.id === id || s.slug === id) || null;
+  return (
+    staticServices.find(
+      (s) =>
+        s.id === id ||
+        s.slug === id ||
+        (s.id === "srv-custom-system" && id === "aplikasi-kasir-pos")
+    ) || null
+  );
 }
 
 // ============================================================================
-// 2. PORTFOLIO CATEGORIES SEED & CRUD (KOSONG, DIISI VIA ADMIN)
+// 2. USERS (DATABASE QUERY LANGSUNG DARI TABEL `users`)
 // ============================================================================
-const initialPortfolioCategories: PortfolioCategory[] = [];
+export async function findUserByEmail(email: string): Promise<User | null> {
+  try {
+    const cleanEmail = email.toLowerCase().trim();
+    const result = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, cleanEmail))
+      .limit(1);
 
+    return result[0] || null;
+  } catch (error) {
+    console.error("Database findUserByEmail error (Pastikan tabel users telah dibuat di MySQL):", error);
+    return null;
+  }
+}
+
+// ============================================================================
+// 3. PORTFOLIO CATEGORIES (DATABASE `portfolio_categories`)
+// ============================================================================
 export async function getAllPortfolioCategories(): Promise<PortfolioCategory[]> {
-  const list = globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories;
-  return [...list].sort((a, b) => a.order - b.order);
+  try {
+    return await db
+      .select()
+      .from(portfolioCategories)
+      .orderBy(asc(portfolioCategories.order));
+  } catch {
+    return [];
+  }
 }
 
 export async function getPortfolioCategoryById(id: string): Promise<PortfolioCategory | null> {
-  const list = globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories;
-  return list.find((c) => c.id === id) || null;
+  try {
+    const res = await db
+      .select()
+      .from(portfolioCategories)
+      .where(eq(portfolioCategories.id, id))
+      .limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function getPortfolioCategoryBySlug(slug: string): Promise<PortfolioCategory | null> {
-  const list = globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories;
-  return list.find((c) => c.slug === slug) || null;
+  try {
+    const res = await db
+      .select()
+      .from(portfolioCategories)
+      .where(eq(portfolioCategories.slug, slug))
+      .limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function createPortfolioCategory(
   data: Omit<PortfolioCategory, "id" | "createdAt" | "updatedAt">
 ): Promise<PortfolioCategory> {
-  const newCat: PortfolioCategory = {
-    ...data,
-    id: `port-cat-${Date.now()}`,
+  const newId = `port-cat-${Date.now()}`;
+  const record = {
+    id: newId,
+    name: data.name,
+    slug: data.slug,
+    description: data.description || null,
+    order: data.order ?? 0,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  globalThis.__SB_PORTFOLIO_CATEGORIES__ = [
-    ...(globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories),
-    newCat,
-  ];
-  return newCat;
+
+  await db.insert(portfolioCategories).values(record);
+  return record;
 }
 
 export async function updatePortfolioCategory(
   id: string,
   data: Partial<PortfolioCategory>
 ): Promise<PortfolioCategory | null> {
-  const list = globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories;
-  const index = list.findIndex((c) => c.id === id);
-  if (index === -1) return null;
+  await db
+    .update(portfolioCategories)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(portfolioCategories.id, id));
 
-  const updated: PortfolioCategory = {
-    ...list[index],
-    ...data,
-    updatedAt: new Date(),
-  };
-  list[index] = updated;
-  globalThis.__SB_PORTFOLIO_CATEGORIES__ = [...list];
-  return updated;
+  return getPortfolioCategoryById(id);
 }
 
 export async function deletePortfolioCategory(id: string): Promise<boolean> {
-  const list = globalThis.__SB_PORTFOLIO_CATEGORIES__ ?? initialPortfolioCategories;
-  const filtered = list.filter((c) => c.id !== id);
-  if (filtered.length === list.length) return false;
-  globalThis.__SB_PORTFOLIO_CATEGORIES__ = filtered;
-  return true;
+  try {
+    await db.delete(portfolioCategories).where(eq(portfolioCategories.id, id));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ============================================================================
-// 3. BLOG CATEGORIES SEED & CRUD (KOSONG, DIISI VIA ADMIN)
+// 4. BLOG CATEGORIES (DATABASE `blog_categories`)
 // ============================================================================
-const initialBlogCategories: BlogCategory[] = [];
-
 export async function getAllBlogCategories(): Promise<BlogCategory[]> {
-  const list = globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories;
-  return [...list].sort((a, b) => a.order - b.order);
+  try {
+    return await db
+      .select()
+      .from(blogCategories)
+      .orderBy(asc(blogCategories.order));
+  } catch {
+    return [];
+  }
 }
 
 export async function getBlogCategoryById(id: string): Promise<BlogCategory | null> {
-  const list = globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories;
-  return list.find((c) => c.id === id) || null;
+  try {
+    const res = await db
+      .select()
+      .from(blogCategories)
+      .where(eq(blogCategories.id, id))
+      .limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory | null> {
-  const list = globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories;
-  return list.find((c) => c.slug === slug) || null;
+  try {
+    const res = await db
+      .select()
+      .from(blogCategories)
+      .where(eq(blogCategories.slug, slug))
+      .limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function createBlogCategory(
   data: Omit<BlogCategory, "id" | "createdAt" | "updatedAt">
 ): Promise<BlogCategory> {
-  const newCat: BlogCategory = {
-    ...data,
-    id: `blog-cat-${Date.now()}`,
+  const newId = `blog-cat-${Date.now()}`;
+  const record = {
+    id: newId,
+    name: data.name,
+    slug: data.slug,
+    description: data.description || null,
+    order: data.order ?? 0,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  globalThis.__SB_BLOG_CATEGORIES__ = [
-    ...(globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories),
-    newCat,
-  ];
-  return newCat;
+
+  await db.insert(blogCategories).values(record);
+  return record;
 }
 
 export async function updateBlogCategory(
   id: string,
   data: Partial<BlogCategory>
 ): Promise<BlogCategory | null> {
-  const list = globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories;
-  const index = list.findIndex((c) => c.id === id);
-  if (index === -1) return null;
+  await db
+    .update(blogCategories)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(blogCategories.id, id));
 
-  const updated: BlogCategory = {
-    ...list[index],
-    ...data,
-    updatedAt: new Date(),
-  };
-  list[index] = updated;
-  globalThis.__SB_BLOG_CATEGORIES__ = [...list];
-  return updated;
+  return getBlogCategoryById(id);
 }
 
 export async function deleteBlogCategory(id: string): Promise<boolean> {
-  const list = globalThis.__SB_BLOG_CATEGORIES__ ?? initialBlogCategories;
-  const filtered = list.filter((c) => c.id !== id);
-  if (filtered.length === list.length) return false;
-  globalThis.__SB_BLOG_CATEGORIES__ = filtered;
-  return true;
+  try {
+    await db.delete(blogCategories).where(eq(blogCategories.id, id));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ============================================================================
-// 4. PORTFOLIOS & PORTFOLIO IMAGES CRUD (KOSONG, DIISI VIA ADMIN)
+// 5. PORTFOLIOS & PORTFOLIO IMAGES (DATABASE `portfolios` & `portfolio_images`)
 // ============================================================================
-const initialPortfolios: Portfolio[] = [];
-const initialPortfolioImages: PortfolioImage[] = [];
+async function attachImagesToPortfolios(list: Portfolio[]): Promise<PortfolioWithImages[]> {
+  if (list.length === 0) return [];
 
-function attachImagesToPortfolio(portfolio: Portfolio): PortfolioWithImages {
-  const allImages = globalThis.__SB_PORTFOLIO_IMAGES__ ?? initialPortfolioImages;
-  const images = allImages
-    .filter((img) => img.portfolioId === portfolio.id)
-    .sort((a, b) => a.order - b.order);
-  return {
-    ...portfolio,
-    images,
-  };
+  const results: PortfolioWithImages[] = [];
+  for (const item of list) {
+    try {
+      const images = await db
+        .select()
+        .from(portfolioImages)
+        .where(eq(portfolioImages.portfolioId, item.id))
+        .orderBy(asc(portfolioImages.order));
+      results.push({ ...item, images });
+    } catch {
+      results.push({ ...item, images: [] });
+    }
+  }
+  return results;
 }
 
 export async function getAllPortfolios(options?: {
   onlyPublished?: boolean;
   category?: string;
 }): Promise<PortfolioWithImages[]> {
-  let list = globalThis.__SB_PORTFOLIOS__ ?? initialPortfolios;
-  if (options?.onlyPublished) {
-    list = list.filter((p) => p.isPublished);
+  try {
+    const conditions = [];
+    if (options?.onlyPublished) {
+      conditions.push(eq(portfolios.isPublished, true));
+    }
+    if (options?.category && options.category !== "all") {
+      conditions.push(like(portfolios.category, `%${options.category}%`));
+    }
+
+    const query = db
+      .select()
+      .from(portfolios)
+      .orderBy(desc(portfolios.createdAt));
+
+    const list = conditions.length > 0 ? await query.where(and(...conditions)) : await query;
+    return attachImagesToPortfolios(list);
+  } catch {
+    return [];
   }
-  if (options?.category && options.category !== "all") {
-    list = list.filter(
-      (p) =>
-        p.category.toLowerCase().includes(options.category!.toLowerCase()) ||
-        p.category.toLowerCase().replace(/[^a-z0-9]+/g, "-") === options.category!.toLowerCase()
-    );
-  }
-  return list.map((p) => attachImagesToPortfolio(p));
 }
 
 export async function getPortfolioBySlug(slug: string): Promise<PortfolioWithImages | null> {
-  const list = globalThis.__SB_PORTFOLIOS__ ?? initialPortfolios;
-  const portfolio = list.find((p) => p.slug === slug) || null;
-  if (!portfolio) return null;
-  return attachImagesToPortfolio(portfolio);
+  try {
+    const res = await db
+      .select()
+      .from(portfolios)
+      .where(eq(portfolios.slug, slug))
+      .limit(1);
+
+    if (!res[0]) return null;
+    const withImages = await attachImagesToPortfolios([res[0]]);
+    return withImages[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function getPortfolioById(id: string): Promise<PortfolioWithImages | null> {
-  const list = globalThis.__SB_PORTFOLIOS__ ?? initialPortfolios;
-  const portfolio = list.find((p) => p.id === id) || null;
-  if (!portfolio) return null;
-  return attachImagesToPortfolio(portfolio);
+  try {
+    const res = await db
+      .select()
+      .from(portfolios)
+      .where(eq(portfolios.id, id))
+      .limit(1);
+
+    if (!res[0]) return null;
+    const withImages = await attachImagesToPortfolios([res[0]]);
+    return withImages[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function createPortfolio(
@@ -224,7 +327,7 @@ export async function createPortfolio(
   }
 ): Promise<PortfolioWithImages> {
   const newId = `port-${Date.now()}`;
-  const newPortfolio: Portfolio = {
+  const record: Portfolio = {
     id: newId,
     slug: data.slug,
     title: data.title,
@@ -241,22 +344,31 @@ export async function createPortfolio(
     updatedAt: new Date(),
   };
 
-  globalThis.__SB_PORTFOLIOS__ = [newPortfolio, ...(globalThis.__SB_PORTFOLIOS__ ?? [])];
+  try {
+    await db.insert(portfolios).values(record);
+  } catch (err: unknown) {
+    console.error("\x1b[31m[createPortfolio DB INSERT ERROR]\x1b[0m:", err);
+    throw err;
+  }
 
   const paths = data.imagePaths || data.imageUrls || [];
-  const newImages: PortfolioImage[] = paths.map((path, idx) => ({
-    id: `img-${Date.now()}-${idx}`,
-    portfolioId: newId,
-    imagePath: path,
-    order: idx,
-  }));
+  const insertedImages: PortfolioImage[] = [];
 
-  globalThis.__SB_PORTFOLIO_IMAGES__ = [
-    ...(globalThis.__SB_PORTFOLIO_IMAGES__ ?? []),
-    ...newImages,
-  ];
+  for (let idx = 0; idx < paths.length; idx++) {
+    const imgRecord: PortfolioImage = {
+      id: `img-${Date.now()}-${idx}`,
+      portfolioId: newId,
+      imagePath: paths[idx],
+      order: idx,
+    };
+    await db.insert(portfolioImages).values(imgRecord);
+    insertedImages.push(imgRecord);
+  }
 
-  return attachImagesToPortfolio(newPortfolio);
+  return {
+    ...record,
+    images: insertedImages,
+  };
 }
 
 export async function updatePortfolio(
@@ -266,136 +378,131 @@ export async function updatePortfolio(
     imageUrls?: string[];
   }
 ): Promise<PortfolioWithImages | null> {
-  const list = globalThis.__SB_PORTFOLIOS__ ?? initialPortfolios;
-  const index = list.findIndex((p) => p.id === id);
-  if (index === -1) return null;
+  const { imagePaths: newPaths, imageUrls: fallbackPaths, ...portfolioData } = data;
 
-  const updated: Portfolio = {
-    ...list[index],
-    ...data,
-    updatedAt: new Date(),
-  };
-  list[index] = updated;
-  globalThis.__SB_PORTFOLIOS__ = [...list];
+  await db
+    .update(portfolios)
+    .set({
+      ...portfolioData,
+      updatedAt: new Date(),
+    })
+    .where(eq(portfolios.id, id));
 
-  const paths = data.imagePaths !== undefined ? data.imagePaths : data.imageUrls;
+  const paths = newPaths !== undefined ? newPaths : fallbackPaths;
   if (paths !== undefined) {
-    const currentImages = (globalThis.__SB_PORTFOLIO_IMAGES__ ?? []).filter((img) => img.portfolioId !== id);
-    const newImages: PortfolioImage[] = paths.map((path, idx) => ({
-      id: `img-${Date.now()}-${idx}`,
-      portfolioId: id,
-      imagePath: path,
-      order: idx,
-    }));
-    globalThis.__SB_PORTFOLIO_IMAGES__ = [...currentImages, ...newImages];
+    // Hapus relasi lama
+    await db.delete(portfolioImages).where(eq(portfolioImages.portfolioId, id));
+
+    // Masukkan relasi gambar baru
+    for (let idx = 0; idx < paths.length; idx++) {
+      await db.insert(portfolioImages).values({
+        id: `img-${Date.now()}-${idx}`,
+        portfolioId: id,
+        imagePath: paths[idx],
+        order: idx,
+      });
+    }
   }
 
-  return attachImagesToPortfolio(updated);
+  return getPortfolioById(id);
 }
 
 export async function deletePortfolio(id: string): Promise<boolean> {
-  const list = globalThis.__SB_PORTFOLIOS__ ?? initialPortfolios;
-  const filtered = list.filter((p) => p.id !== id);
-  if (filtered.length === list.length) return false;
-  globalThis.__SB_PORTFOLIOS__ = filtered;
-
-  globalThis.__SB_PORTFOLIO_IMAGES__ = (globalThis.__SB_PORTFOLIO_IMAGES__ ?? []).filter(
-    (img) => img.portfolioId !== id
-  );
-
-  return true;
+  try {
+    await db.delete(portfolioImages).where(eq(portfolioImages.portfolioId, id));
+    await db.delete(portfolios).where(eq(portfolios.id, id));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ============================================================================
-// 5. BLOGS CRUD (KOSONG, DIISI VIA ADMIN)
+// 6. BLOGS (DATABASE `blogs`)
 // ============================================================================
-const initialBlogs: Blog[] = [];
-
 export async function getAllBlogs(options?: {
   onlyPublished?: boolean;
   category?: string;
   searchQuery?: string;
 }): Promise<Blog[]> {
-  let list = globalThis.__SB_BLOGS__ ?? initialBlogs;
-  if (options?.onlyPublished) {
-    list = list.filter((b) => b.isPublished);
+  try {
+    const conditions = [];
+    if (options?.onlyPublished) {
+      conditions.push(eq(blogs.isPublished, true));
+    }
+    if (options?.category && options.category !== "all") {
+      conditions.push(like(blogs.category, `%${options.category}%`));
+    }
+    if (options?.searchQuery) {
+      const q = `%${options.searchQuery}%`;
+      conditions.push(or(like(blogs.title, q), like(blogs.excerpt, q)));
+    }
+
+    const query = db.select().from(blogs).orderBy(desc(blogs.publishedAt));
+    return conditions.length > 0 ? await query.where(and(...conditions)) : await query;
+  } catch {
+    return [];
   }
-  if (options?.category && options.category !== "all") {
-    list = list.filter(
-      (b) =>
-        b.category.toLowerCase().includes(options.category!.toLowerCase()) ||
-        b.category.toLowerCase().replace(/[^a-z0-9]+/g, "-") === options.category!.toLowerCase()
-    );
-  }
-  if (options?.searchQuery) {
-    const query = options.searchQuery.toLowerCase();
-    list = list.filter(
-      (b) => b.title.toLowerCase().includes(query) || b.excerpt.toLowerCase().includes(query)
-    );
-  }
-  return [...list];
 }
 
 export async function getBlogBySlug(slug: string): Promise<Blog | null> {
-  const list = globalThis.__SB_BLOGS__ ?? initialBlogs;
-  return list.find((b) => b.slug === slug) || null;
+  try {
+    const res = await db.select().from(blogs).where(eq(blogs.slug, slug)).limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function getBlogById(id: string): Promise<Blog | null> {
-  const list = globalThis.__SB_BLOGS__ ?? initialBlogs;
-  return list.find((b) => b.id === id) || null;
+  try {
+    const res = await db.select().from(blogs).where(eq(blogs.id, id)).limit(1);
+    return res[0] || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function createBlog(data: Omit<Blog, "id" | "createdAt" | "updatedAt">): Promise<Blog> {
-  const newBlog: Blog = {
-    ...data,
-    id: `blog-${Date.now()}`,
+  const newId = `blog-${Date.now()}`;
+  const record: Blog = {
+    id: newId,
+    slug: data.slug,
+    title: data.title,
+    excerpt: data.excerpt,
+    content: data.content,
+    category: data.category,
+    author: data.author,
+    imagePath: data.imagePath || null,
+    tags: data.tags || [],
+    blogFaqs: data.blogFaqs || [],
+    isPublished: data.isPublished ?? true,
+    publishedAt: data.publishedAt || new Date(),
     createdAt: new Date(),
     updatedAt: new Date(),
   };
-  globalThis.__SB_BLOGS__ = [newBlog, ...(globalThis.__SB_BLOGS__ ?? [])];
-  return newBlog;
+
+  await db.insert(blogs).values(record);
+  return record;
 }
 
 export async function updateBlog(id: string, data: Partial<Blog>): Promise<Blog | null> {
-  const list = globalThis.__SB_BLOGS__ ?? initialBlogs;
-  const index = list.findIndex((b) => b.id === id);
-  if (index === -1) return null;
+  await db
+    .update(blogs)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(blogs.id, id));
 
-  const updated: Blog = {
-    ...list[index],
-    ...data,
-    updatedAt: new Date(),
-  };
-  list[index] = updated;
-  globalThis.__SB_BLOGS__ = [...list];
-  return updated;
+  return getBlogById(id);
 }
 
 export async function deleteBlog(id: string): Promise<boolean> {
-  const list = globalThis.__SB_BLOGS__ ?? initialBlogs;
-  const filtered = list.filter((b) => b.id !== id);
-  if (filtered.length === list.length) return false;
-  globalThis.__SB_BLOGS__ = filtered;
-  return true;
-}
-
-// Reset Global Cache to empty arrays if not yet created
-if (!globalThis.__SB_USERS__) {
-  globalThis.__SB_USERS__ = [];
-}
-if (!globalThis.__SB_PORTFOLIOS__) {
-  globalThis.__SB_PORTFOLIOS__ = [];
-}
-if (!globalThis.__SB_PORTFOLIO_IMAGES__) {
-  globalThis.__SB_PORTFOLIO_IMAGES__ = [];
-}
-if (!globalThis.__SB_PORTFOLIO_CATEGORIES__) {
-  globalThis.__SB_PORTFOLIO_CATEGORIES__ = [];
-}
-if (!globalThis.__SB_BLOGS__) {
-  globalThis.__SB_BLOGS__ = [];
-}
-if (!globalThis.__SB_BLOG_CATEGORIES__) {
-  globalThis.__SB_BLOG_CATEGORIES__ = [];
+  try {
+    await db.delete(blogs).where(eq(blogs.id, id));
+    return true;
+  } catch {
+    return false;
+  }
 }

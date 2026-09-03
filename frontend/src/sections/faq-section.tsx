@@ -7,6 +7,7 @@ import {
   ArrowRight,
   MessageCircle,
 } from "lucide-react";
+import { SITE_CONFIG } from "@/lib/site-config";
 
 interface FAQItem {
   id: string;
@@ -148,7 +149,9 @@ export function FAQSection() {
                 </div>
 
                 <a
-                  href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20punya%20pertanyaan%20seputar%20pembuatan%20website"
+                  href={SITE_CONFIG.getWhatsappUrl(
+                    "Halo Solusi Berdigital, saya punya pertanyaan seputar pembuatan website"
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group"
@@ -264,7 +267,9 @@ export function FAQSection() {
                 </div>
 
                 <a
-                  href="https://wa.me/6285858089376?text=Halo%20Solusi%20Berdigital%2C%20saya%20punya%20pertanyaan%20seputar%20pembuatan%20website"
+                  href={SITE_CONFIG.getWhatsappUrl(
+                    "Halo Solusi Berdigital, saya punya pertanyaan seputar pembuatan website"
+                  )}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group"
