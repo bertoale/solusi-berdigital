@@ -156,55 +156,47 @@ export function WhyChooseUsSection() {
                 </p>
               </div>
 
-              {/* Concrete Value Modules inside Panel (SOLID ORANGE / NON-TRANSPARENT) */}
+              {/* Concrete Value Modules inside Panel (SOLID AMBER/GOLD CLAY 3D) */}
               <div className="space-y-3.5 relative z-10 pt-2">
-                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
-                  <div className="flex items-center gap-3.5">
-                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
-                      <CalendarCheck className="size-5" />
+                {[
+                  {
+                    icon: CalendarCheck,
+                    title: "Timeline Terarah",
+                    desc: "Mulai 3 s/d 7 Hari Kerja Selesai",
+                  },
+                  {
+                    icon: Globe,
+                    title: "Website & Domain Resmi Milik Anda",
+                    desc: "Bukan sistem sewa. Aset digital mandiri bisnis Anda",
+                  },
+                  {
+                    icon: Wrench,
+                    title: "Dukungan Pemeliharaan",
+                    desc: "Backup Rutin & Bantuan Teknis",
+                  },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-2xl bg-gradient-to-b from-amber-300 via-amber-400 to-amber-500 text-slate-950 border-2 border-amber-200/90 shadow-[0_8px_20px_-3px_rgba(0,0,0,0.35),0_0_12px_rgba(245,158,11,0.2),inset_0_2px_4px_rgba(255,255,255,0.7),inset_0_-3px_6px_rgba(180,83,9,0.35)] flex items-center justify-between gap-3.5 hover:scale-[1.015] hover:shadow-[0_12px_26px_-3px_rgba(0,0,0,0.45),0_0_16px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,0.85),inset_0_-3px_6px_rgba(180,83,9,0.4)] transition-all duration-300 group"
+                    >
+                      <div className="flex items-center gap-3.5">
+                        <div className="size-11 rounded-full bg-primary text-amber-300 flex items-center justify-center shrink-0 shadow-[0_4px_8px_rgba(0,0,0,0.3),inset_0_2px_3px_rgba(255,255,255,0.3),inset_0_-2px_4px_rgba(0,0,0,0.4)] border border-primary-foreground/20 group-hover:scale-105 transition-transform">
+                          <Icon className="size-5" />
+                        </div>
+                        <div>
+                          <span className="text-sm font-black block text-slate-950 leading-tight tracking-tight">
+                            {item.title}
+                          </span>
+                          <span className="text-xs text-slate-900/90 font-bold leading-snug">
+                            {item.desc}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-sm font-black block text-primary leading-tight">
-                        Timeline Terarah
-                      </span>
-                      <span className="text-xs text-primary/85 font-semibold leading-snug">
-                        Mulai 3 s/d 7 Hari Kerja Selesai
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
-                  <div className="flex items-center gap-3.5">
-                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
-                      <Globe className="size-5" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-black block text-primary leading-tight">
-                        Website & Domain Resmi Milik Anda
-                      </span>
-                      <span className="text-xs text-primary/85 font-semibold leading-snug">
-                        Bukan sistem sewa. Aset digital mandiri bisnis Anda
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 theme-card-flat bg-warning text-primary border-2 border-warning-hover shadow-md flex items-center justify-between gap-3 hover:scale-[1.01] transition-transform">
-                  <div className="flex items-center gap-3.5">
-                    <div className="size-11 rounded-full bg-primary text-warning flex items-center justify-center shrink-0 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4),inset_-2px_-2px_4px_rgba(0,0,0,0.4),0_4px_8px_rgba(12,53,106,0.25)] border border-white/25">
-                      <Wrench className="size-5" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-black block text-primary leading-tight">
-                        Dukungan Pemeliharaan
-                      </span>
-                      <span className="text-xs text-primary/85 font-semibold leading-snug">
-                        Backup Rutin & Bantuan Teknis
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
 
               {/* Bottom Support Badge */}

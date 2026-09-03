@@ -120,18 +120,23 @@
 }
 
 .theme-btn {
-  box-shadow: var(--btn-shadow);
+  box-shadow: var(--btn-shadow) !important;
   border-radius: var(--radius);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition:
+    transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .theme-btn:hover {
-  box-shadow: var(--btn-hover-shadow);
+  box-shadow: var(--btn-hover-shadow) !important;
   transform: var(--btn-hover-transform);
 }
 
 .theme-btn:active {
-  box-shadow: var(--btn-active-shadow);
+  box-shadow: var(--btn-active-shadow) !important;
   transform: var(--btn-active-transform);
 }
 

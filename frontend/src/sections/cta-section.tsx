@@ -6,6 +6,10 @@ import {
   Clock,
   MessageSquare,
   CheckCircle2,
+  Building2,
+  Store,
+  Megaphone,
+  Database,
 } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 
@@ -15,14 +19,14 @@ interface CTASectionProps {
 
 export function CTASection({
   whatsappUrl = SITE_CONFIG.getWhatsappUrl(
-    "Halo Solusi Berdigital, saya ingin konsultasi pembuatan website untuk bisnis saya."
+    "Halo Solusi Berdigital, saya ingin konsultasi pembuatan website untuk bisnis saya.",
   ),
 }: CTASectionProps) {
   const quickTopics = [
-    "Website Company Profile",
-    "Toko Online WhatsApp",
-    "Landing Page Iklan",
-    "Sistem Bisnis & Inventory",
+    { title: "Website Company Profile", icon: Building2 },
+    { title: "Toko Online WhatsApp", icon: Store },
+    { title: "Landing Page Iklan", icon: Megaphone },
+    { title: "Sistem Bisnis & Inventory", icon: Database },
   ];
 
   return (
@@ -51,9 +55,26 @@ export function CTASection({
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M0 350L500 0M80 350L500 80M160 350L500 160M240 350L500 240" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 10" />
-              <circle cx="420" cy="80" r="70" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="420" cy="80" r="4" fill="var(--color-warning)" fillOpacity="0.8" />
+              <path
+                d="M0 350L500 0M80 350L500 80M160 350L500 160M240 350L500 240"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeDasharray="6 10"
+              />
+              <circle
+                cx="420"
+                cy="80"
+                r="70"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <circle
+                cx="420"
+                cy="80"
+                r="4"
+                fill="var(--color-warning)"
+                fillOpacity="0.8"
+              />
             </svg>
           </div>
 
@@ -77,7 +98,9 @@ export function CTASection({
 
               {/* High Contrast Subtext */}
               <p className="text-base sm:text-lg text-primary-foreground/90 max-w-xl leading-relaxed font-normal">
-                Ceritakan ide atau kebutuhan sistem usaha Anda kepada tim kami. Respon cepat di jam kerja, tanpa formulir rumit, dan 100% bebas komitmen awal.
+                Ceritakan ide atau kebutuhan sistem usaha Anda kepada tim kami.
+                Respon cepat di jam kerja, tanpa formulir rumit, dan 100% bebas
+                komitmen awal.
               </p>
 
               {/* CTA Buttons Group */}
@@ -87,7 +110,7 @@ export function CTASection({
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 theme-btn bg-[#25D366] hover:bg-[#20ba5a] text-white font-black text-base sm:text-lg px-8 h-14 rounded-2xl shadow-lg shadow-[#25D366]/30 active:scale-[0.98] transition-all group"
+                  className="inline-flex items-center justify-center gap-3 theme-btn bg-gradient-to-b from-[#28e16f] to-[#1ebe5d] text-white font-black text-base sm:text-lg px-8 h-14 rounded-2xl border-2 border-emerald-300/40 active:scale-[0.98] transition-all group"
                 >
                   <svg
                     className="w-6 h-6 fill-current shrink-0"
@@ -101,10 +124,10 @@ export function CTASection({
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
 
-                {/* SECONDARY OUTLINE CTA */}
+                {/* SECONDARY SOLID TACTILE CTA */}
                 <a
                   href="#layanan"
-                  className="inline-flex items-center justify-center px-6 h-14 rounded-2xl border-2 border-primary-foreground/30 bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground font-bold text-sm transition-all"
+                  className="theme-btn inline-flex items-center justify-center px-7 h-14 rounded-2xl bg-gradient-to-b from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 text-foreground hover:from-slate-100 hover:to-slate-200 font-bold text-sm sm:text-base border-2 border-white/60 dark:border-slate-700/60 transition-all active:scale-[0.98]"
                 >
                   <span>Lihat Pilihan Layanan</span>
                 </a>
@@ -127,54 +150,100 @@ export function CTASection({
               </div>
             </div>
 
-            {/* RIGHT COLUMN: High-Contrast Live WhatsApp Interactive Box */}
+            {/* RIGHT COLUMN: Solid Claymorphic Live WhatsApp Interactive Box */}
             <div className="lg:col-span-5 relative">
-              <div className="theme-card-flat bg-black/40 backdrop-blur-xl p-6 sm:p-7 space-y-5 border-2 border-primary-foreground/25 shadow-2xl">
+              <div className="theme-card bg-card text-card-foreground p-6 sm:p-7 space-y-5 rounded-2xl border border-border/80 shadow-2xl">
                 {/* Header inside Preview Box */}
-                <div className="flex items-center justify-between pb-4 border-b border-primary-foreground/15">
+                <div className="flex items-center justify-between pb-4 border-b border-border">
                   <div className="flex items-center gap-3">
-                    <div className="relative size-11 rounded-full bg-[#25D366] text-white flex items-center justify-center font-bold shadow-md shadow-[#25D366]/30">
+                    <div className="relative size-11 rounded-full bg-whatsapp text-whatsapp-foreground flex items-center justify-center font-bold shadow-md shadow-whatsapp/30">
                       <MessageSquare className="size-5 fill-current" />
                       {/* Live Online Indicator */}
-                      <span className="absolute -top-0.5 -right-0.5 size-3.5 rounded-full bg-emerald-300 border-2 border-primary animate-pulse" />
+                      <span className="absolute -top-0.5 -right-0.5 size-3.5 rounded-full bg-emerald-400 border-2 border-card animate-pulse" />
                     </div>
                     <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-primary-foreground">Konsultan Solusi Berdigital</h3>
-                      <span className="text-xs text-[#25D366] font-bold flex items-center gap-1.5 mt-0.5">
-                        <span className="size-2 rounded-full bg-[#25D366] animate-pulse" />
+                      <h3 className="text-sm sm:text-base font-extrabold text-foreground">
+                        Konsultan Solusi Berdigital
+                      </h3>
+                      <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1.5 mt-0.5">
+                        <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
                         Online Siap Melayani
                       </span>
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono font-black text-warning px-2.5 py-1 rounded-full bg-warning/20 border border-warning/30">Fast Reply</span>
                 </div>
 
-                {/* Chat Message Bubble */}
-                <div className="p-4 rounded-2xl theme-inset bg-primary-foreground/15 text-xs sm:text-sm text-primary-foreground leading-relaxed border border-primary-foreground/20 space-y-1.5 shadow-inner">
-                  <p className="font-bold text-warning flex items-center gap-1.5">
+                {/* Chat Message Bubble (Clean WhatsApp Speech Bubble) */}
+                <div className="relative mb-4 p-4 rounded-2xl rounded-br-md bg-gradient-to-b from-emerald-50 to-emerald-100/90 dark:from-emerald-950/60 dark:to-emerald-900/50 text-emerald-950 dark:text-emerald-100 border-2 border-emerald-300/80 dark:border-emerald-800/80 space-y-1 shadow-sm">
+                  <p className="font-extrabold text-emerald-950 dark:text-emerald-100 flex items-center gap-1.5 text-xs sm:text-sm">
                     <span>👋</span> Halo! Mau konsultasi kebutuhan apa?
                   </p>
-                  <p className="text-primary-foreground/90 text-xs font-medium">Pilih topik yang Anda butuhkan untuk langsung terhubung dengan tim kami:</p>
+                  <p className="text-emerald-800/90 dark:text-emerald-300/90 text-xs font-medium leading-relaxed">
+                    Pilih topik yang Anda butuhkan untuk langsung terhubung
+                    dengan tim kami:
+                  </p>
+
+                  {/* Clean Seamless Speech Bubble Pointer at Bottom-Right */}
+                  <div className="absolute -bottom-2 right-8 w-4 h-2 pointer-events-none">
+                    <svg
+                      viewBox="0 0 16 8"
+                      className="w-full h-full overflow-visible"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0 L7.1 6.6 C7.5 7 8.5 7 8.9 6.6 L16 0"
+                        className="stroke-emerald-300/90 dark:stroke-emerald-800/90"
+                        strokeWidth="2"
+                        strokeLinejoin="round"
+                      />
+                      <polygon
+                        points="1,0 8,7 15,0"
+                        className="fill-emerald-100/90 dark:fill-emerald-900/60"
+                      />
+                      {/* Bridges the container border seamlessly */}
+                      <line
+                        x1="1"
+                        y1="0"
+                        x2="15"
+                        y2="0"
+                        className="stroke-emerald-100/90 dark:stroke-emerald-900/60"
+                        strokeWidth="3"
+                      />
+                    </svg>
+                  </div>
                 </div>
 
                 {/* Direct Topic Action Pills */}
                 <div className="space-y-2.5">
-                  {quickTopics.map((topic, idx) => (
-                    <a
-                      key={idx}
-                      href={SITE_CONFIG.getWhatsappUrl(`Halo saya ingin konsultasi tentang ${topic}`)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between p-3.5 rounded-xl bg-primary-foreground/12 hover:bg-[#25D366] hover:text-white border border-primary-foreground/20 hover:border-[#25D366] text-xs sm:text-sm font-bold text-primary-foreground transition-all group/item shadow-sm hover:shadow-lg hover:shadow-[#25D366]/20"
-                    >
-                      <span>{topic}</span>
-                      <ArrowRight className="size-4 text-warning group-hover/item:text-white group-hover/item:translate-x-1 transition-all" />
-                    </a>
-                  ))}
+                  {quickTopics.map((topic, idx) => {
+                    const Icon = topic.icon;
+                    return (
+                      <a
+                        key={idx}
+                        href={SITE_CONFIG.getWhatsappUrl(
+                          `Halo saya ingin konsultasi tentang ${topic.title}`,
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="theme-btn flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-gradient-to-b from-blue-50 to-blue-100/90 dark:from-blue-950/70 dark:to-blue-900/50 border-2 border-blue-200/90 dark:border-blue-800/80 text-blue-950 dark:text-blue-100 hover:from-primary hover:to-primary-hover hover:text-primary-foreground hover:border-primary text-xs sm:text-sm font-bold transition-all group/item active:scale-[0.98]"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="size-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-600/15 text-blue-700 dark:text-blue-300 group-hover/item:bg-white/20 group-hover/item:text-white transition-colors">
+                            <Icon className="size-4" />
+                          </div>
+                          <span>{topic.title}</span>
+                        </div>
+                        <ArrowRight className="size-4 text-blue-600 dark:text-blue-400 group-hover/item:text-white group-hover/item:translate-x-1 transition-all shrink-0" />
+                      </a>
+                    );
+                  })}
                 </div>
 
-                <div className="pt-1 text-center text-xs text-primary-foreground/80 font-medium">
-                  <span>Klik topik di atas untuk langsung membuka chat WhatsApp</span>
+                <div className="pt-1 text-center text-xs text-muted-foreground font-medium">
+                  <span>
+                    Klik topik di atas untuk langsung membuka chat WhatsApp
+                  </span>
                 </div>
               </div>
             </div>
