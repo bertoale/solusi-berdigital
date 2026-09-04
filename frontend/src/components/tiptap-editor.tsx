@@ -76,8 +76,8 @@ export function TiptapEditor({
         <div className="flex flex-wrap items-center gap-1 p-2 bg-muted/50 border-b border-border/80">
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleBold().run()}
-            disabled={!editor.can().chain().focus().toggleBold().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("bold")
                 ? "bg-primary text-primary-foreground shadow-sm"
@@ -90,8 +90,8 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            disabled={!editor.can().chain().focus().toggleItalic().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("italic")
                 ? "bg-primary text-primary-foreground shadow-sm"
@@ -104,8 +104,8 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleStrike().run()}
-            disabled={!editor.can().chain().focus().toggleStrike().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("strike")
                 ? "bg-primary text-primary-foreground shadow-sm"
@@ -120,6 +120,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("heading", { level: 2 })
@@ -133,6 +134,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("heading", { level: 3 })
@@ -148,6 +150,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("bulletList")
@@ -161,6 +164,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("orderedList")
@@ -174,6 +178,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("blockquote")
@@ -187,6 +192,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
             className={`p-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               editor.isActive("codeBlock")
@@ -200,6 +206,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
             className="p-2 rounded-lg text-xs font-bold hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
             title="Garis Pemisah (Horizontal Rule)"
@@ -211,6 +218,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().chain().focus().undo().run()}
             className="p-2 rounded-lg text-xs font-bold hover:bg-muted text-muted-foreground hover:text-foreground transition-all disabled:opacity-30 cursor-pointer"
@@ -221,6 +229,7 @@ export function TiptapEditor({
 
           <button
             type="button"
+            onMouseDown={(e) => e.preventDefault()}
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().chain().focus().redo().run()}
             className="p-2 rounded-lg text-xs font-bold hover:bg-muted text-muted-foreground hover:text-foreground transition-all disabled:opacity-30 cursor-pointer"
