@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { uploadBufferToS3 } from "@/lib/s3";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
