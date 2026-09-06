@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "Layanan Pembuatan Website & Sistem Bisnis | Solusi Berdigital",
   description:
     "Pilihan layanan website profil perusahaan, toko online katalog WhatsApp, landing page promosi produk, dan sistem informasi bisnis/inventory kustom.",
+  alternates: {
+    canonical: "https://solusiberdigital.com/layanan",
+  },
 };
 
 const iconMap: Record<string, typeof Building2> = {

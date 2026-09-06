@@ -1,8 +1,11 @@
 import { MetadataRoute } from "next";
 import { getAllBlogs, getAllPortfolios, getAllServices } from "@/lib/data-store";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://solusiberdigital.id";
+  const baseUrl = "https://solusiberdigital.com";
 
   // 1. Static Pages
   const staticRoutes: MetadataRoute.Sitemap = [

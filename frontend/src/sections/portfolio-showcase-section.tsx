@@ -236,7 +236,7 @@ export function PortfolioShowcaseSection() {
                 <div className="size-2.5 rounded-full bg-amber-400/80" />
                 <div className="size-2.5 rounded-full bg-emerald-400/80" />
                 <div className="ml-2 px-2.5 py-0.5 rounded bg-background text-foreground/80 font-mono text-[10px] sm:text-xs border border-border">
-                  https://demo.{current.id}.solusiberdigital.id
+                  https://demo.{current.id}.solusiberdigital.com
                 </div>
               </div>
               <span className="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">

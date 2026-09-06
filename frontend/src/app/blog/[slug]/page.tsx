@@ -30,9 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${blog.title} | Solusi Berdigital`,
     description: blog.excerpt,
+    alternates: {
+      canonical: `https://solusiberdigital.com/blog/${blog.slug}`,
+    },
     openGraph: {
       title: blog.title,
       description: blog.excerpt,
+      url: `https://solusiberdigital.com/blog/${blog.slug}`,
+      type: "article",
+      publishedTime: new Date(blog.publishedAt).toISOString(),
       images: blog.imagePath ? [getPublicImageUrl(blog.imagePath)] : undefined,
     },
   };

@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "Portofolio & Hasil Pengerjaan | Solusi Berdigital",
   description:
     "Jelajahi galeri hasil pembuatan website, company profile, toko online katalog WhatsApp, dan sistem POS kasir yang telah kami kembangkan untuk klien di Indonesia.",
+  alternates: {
+    canonical: "https://solusiberdigital.com/portofolio",
+  },
 };
 
 export default async function PortofolioPage({

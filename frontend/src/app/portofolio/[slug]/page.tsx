@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/site-config";
 
+import { getPublicImageUrl } from "@/lib/s3";
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -22,9 +24,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) {
     return { title: "Portofolio Tidak Ditemukan | Solusi Berdigital" };
   }
+  const firstImage = item.images?.[0]?.imagePath ? getPublicImageUrl(item.images[0].imagePath) : undefined;
   return {
     title: `Proyek: ${item.title} | Solusi Berdigital`,
     description: item.description,
+    alternates: {
+      canonical: `https://solusiberdigital.com/portofolio/${item.slug}`,
+    },
+    openGraph: {
+      title: `${item.title} | Solusi Berdigital`,
+      description: item.description,
+      url: `https://solusiberdigital.com/portofolio/${item.slug}`,
+      images: firstImage ? [firstImage] : undefined,
+    },
   };
 }
 

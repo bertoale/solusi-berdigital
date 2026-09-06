@@ -5,12 +5,12 @@ export function OrganizationSchema() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "@id": "https://solusiberdigital.id/#organization",
+    "@id": "https://solusiberdigital.com/#organization",
     name: "Solusi Berdigital",
     alternateName: "Solusi Berdigital Web Development & IT Solution",
-    url: "https://solusiberdigital.id",
-    logo: "https://solusiberdigital.id/logo-solusi-berdigital.png",
-    image: "https://solusiberdigital.id/logo-solusi-berdigital.png",
+    url: "https://solusiberdigital.com",
+    logo: "https://solusiberdigital.com/logo-solusi-berdigital.png",
+    image: "https://solusiberdigital.com/logo-solusi-berdigital.png",
     description:
       "Jasa pembuatan website profesional, toko online katalog WhatsApp, landing page iklan, dan sistem informasi & aplikasi bisnis kustom untuk UMKM dan perusahaan di Indonesia.",
     telephone: `+${SITE_CONFIG.whatsapp}`,
@@ -111,11 +111,11 @@ export function OrganizationSchema() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://solusiberdigital.id/#website",
-    url: "https://solusiberdigital.id",
+    "@id": "https://solusiberdigital.com/#website",
+    url: "https://solusiberdigital.com",
     name: "Solusi Berdigital",
     publisher: {
-      "@id": "https://solusiberdigital.id/#organization",
+      "@id": "https://solusiberdigital.com/#organization",
     },
     inLanguage: "id-ID",
   };

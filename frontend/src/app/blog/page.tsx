@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Blog & Wawasan Bisnis Digital | Solusi Berdigital",
   description:
     "Kumpulan artikel, tips digital marketing, panduan website UMKM, strategi katalog WhatsApp, dan efisiensi sistem kasir POS.",
+  alternates: {
+    canonical: "https://solusiberdigital.com/blog",
+  },
 };
 
 export default async function BlogPage({

@@ -23,7 +23,7 @@ interface BlogDetailSchemaProps {
 }
 
 export function BlogDetailSchema({ blog, publicImageUrl }: BlogDetailSchemaProps) {
-  const articleUrl = `https://solusiberdigital.id/blog/${blog.slug}`;
+  const articleUrl = `https://solusiberdigital.com/blog/${blog.slug}`;
   const publishedDate = new Date(blog.publishedAt).toISOString();
   const modifiedDate = new Date(blog.updatedAt || blog.publishedAt).toISOString();
 
@@ -48,10 +48,10 @@ export function BlogDetailSchema({ blog, publicImageUrl }: BlogDetailSchemaProps
     publisher: {
       "@type": "Organization",
       name: "Solusi Berdigital",
-      url: "https://solusiberdigital.id",
+      url: "https://solusiberdigital.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://solusiberdigital.id/logo-solusi-berdigital.png",
+        url: "https://solusiberdigital.com/logo-solusi-berdigital.png",
       },
     },
     mainEntityOfPage: {

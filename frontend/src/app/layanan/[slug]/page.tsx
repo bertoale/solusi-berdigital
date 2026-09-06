@@ -47,10 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${service.title} | Solusi Berdigital`,
     description: service.shortDesc,
+    alternates: {
+      canonical: `https://solusiberdigital.com/layanan/${service.slug}`,
+    },
     openGraph: {
       title: `${service.title} | Solusi Berdigital`,
       description: service.shortDesc,
-      url: `https://solusiberdigital.id/layanan/${service.slug}`,
+      url: `https://solusiberdigital.com/layanan/${service.slug}`,
     },
   };
 }

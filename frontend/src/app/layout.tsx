@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
@@ -39,15 +40,15 @@ export const metadata: Metadata = {
     telephone: false,
   },
   // Canonical URL Configuration
-  metadataBase: new URL("https://solusiberdigital.id"),
+  metadataBase: new URL("https://solusiberdigital.com"),
   alternates: {
-    canonical: "https://solusiberdigital.id",
+    canonical: "https://solusiberdigital.com",
   },
   openGraph: {
     title: "Jasa Pembuatan Website & Toko Online | Solusi Berdigital",
     description:
       "Jasa pembuatan website profesional, toko online WhatsApp, landing page & sistem kasir untuk UMKM & bisnis di Indonesia. Gratis domain & hosting 1 tahun.",
-    url: "https://solusiberdigital.id",
+    url: "https://solusiberdigital.com",
     siteName: "Solusi Berdigital",
     locale: "id_ID",
     type: "website",
@@ -74,6 +75,9 @@ export const metadata: Metadata = {
     shortcut: "/solusi-berdigital.ico",
     apple: "/solusi-berdigital.ico",
   },
+  verification: {
+    google: "MhrVTLOPosbInYUqsjpikBdVu8BXuiq_2gALQk4QGuI",
+  },
   other: {
     "geo.region": "ID-BA",
     "geo.placename": "Badung, Bali, Indonesia",
@@ -99,6 +103,19 @@ export default function RootLayout({
         <Navbar />
         <div className="flex-1">{children}</div>
         <Footer />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-LY8XBQQZ3G"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-LY8XBQQZ3G');
+          `}
+        </Script>
       </body>
     </html>
   );

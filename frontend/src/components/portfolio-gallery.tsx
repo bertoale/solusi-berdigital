@@ -36,7 +36,7 @@ export function PortfolioGallery({
 
   const displayUrl = liveUrl
     ? liveUrl.replace(/^https?:\/\//, "")
-    : `${slug}.solusiberdigital.id`;
+    : `${slug}.solusiberdigital.com`;
 
   const hasImages = images && images.length > 0;
   const currentImage = hasImages ? images[activeIndex] : null;

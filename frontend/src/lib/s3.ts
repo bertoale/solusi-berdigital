@@ -1,20 +1,29 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-const endpoint = process.env.S3_ENDPOINT || "";
-const bucket = process.env.S3_BUCKET || "";
-const accessKey = process.env.S3_ACCESS_KEY || "";
-const secretKey = process.env.S3_SECRET_KEY || "";
+function getS3Client(): { client: S3Client; bucket: string } {
+  const endpoint = process.env.S3_ENDPOINT || "";
+  const bucket = process.env.S3_BUCKET || "";
+  const accessKey = process.env.S3_ACCESS_KEY || "";
+  const secretKey = process.env.S3_SECRET_KEY || "";
 
-// S3 Client configured for S3-compatible Object Storage
-export const s3Client = new S3Client({
-  endpoint: endpoint || undefined,
-  region: "auto",
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretKey,
-  },
-  forcePathStyle: true, // required for most S3-compatible endpoints
-});
+  if (!bucket || !accessKey || !secretKey) {
+    throw new Error(
+      `Konfigurasi S3 belum lengkap: bucket=${Boolean(bucket)}, accessKey=${Boolean(accessKey)}, secretKey=${Boolean(secretKey)}, endpoint=${endpoint}`
+    );
+  }
+
+  const client = new S3Client({
+    endpoint: endpoint || undefined,
+    region: "us-east-1",
+    credentials: {
+      accessKeyId: accessKey,
+      secretAccessKey: secretKey,
+    },
+    forcePathStyle: true,
+  });
+
+  return { client, bucket };
+}
 
 /**
  * Upload buffer ke S3 bucket
@@ -27,22 +36,30 @@ export async function uploadBufferToS3(
   key: string,
   contentType = "image/webp"
 ): Promise<{ success: boolean; imagePath: string }> {
-  if (!bucket) {
-    throw new Error("S3_BUCKET is not set in environment variables!");
-  }
+  const { client, bucket } = getS3Client();
 
   // Bersihkan leading slash dari key untuk S3 object key
   const cleanKey = key.startsWith("/") ? key.slice(1) : key;
 
-  const command = new PutObjectCommand({
-    Bucket: bucket,
-    Key: cleanKey,
-    Body: buffer,
-    ContentType: contentType,
-    ACL: "public-read", // S3 public read access jika didukung
-  });
-
-  await s3Client.send(command);
+  try {
+    const commandWithAcl = new PutObjectCommand({
+      Bucket: bucket,
+      Key: cleanKey,
+      Body: buffer,
+      ContentType: contentType,
+      ACL: "public-read",
+    });
+    await client.send(commandWithAcl);
+  } catch (aclError: unknown) {
+    console.warn("PutObject with ACL failed, retrying without ACL:", aclError);
+    const commandWithoutAcl = new PutObjectCommand({
+      Bucket: bucket,
+      Key: cleanKey,
+      Body: buffer,
+      ContentType: contentType,
+    });
+    await client.send(commandWithoutAcl);
+  }
 
   // Return imagePath standar yang disimpan di database (tanpa endpoint S3)
   const dbImagePath = `/${cleanKey}`;

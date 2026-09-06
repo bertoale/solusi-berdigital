@@ -36,12 +36,13 @@ export async function POST(request: NextRequest) {
       message: "Gambar berhasil diupload ke S3",
       imagePath: result.imagePath, // e.g. /blog/1725300000000-gambar.webp
     });
-  } catch (err) {
+  } catch (err: unknown) {
+    const errorMsg = err instanceof Error ? err.message : String(err);
     console.error("S3 Upload Error:", err);
     return NextResponse.json(
       {
         success: false,
-        error: "Gagal mengupload gambar ke S3. Pastikan konfigurasi S3 telah sesuai.",
+        error: `Gagal mengupload gambar ke S3: ${errorMsg}`,
       },
       { status: 500 }
     );

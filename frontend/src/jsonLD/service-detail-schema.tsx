@@ -13,11 +13,11 @@ export function ServiceDetailSchema({ service }: ServiceDetailSchemaProps) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    "@id": `https://solusiberdigital.id/layanan/${service.slug}#service`,
+    "@id": `https://solusiberdigital.com/layanan/${service.slug}#service`,
     name: service.title,
     description: service.fullDesc,
     provider: {
-      "@id": "https://solusiberdigital.id/#organization",
+      "@id": "https://solusiberdigital.com/#organization",
     },
     areaServed: {
       "@type": "Country",
@@ -39,7 +39,7 @@ export function ServiceDetailSchema({ service }: ServiceDetailSchemaProps) {
       price: cleanPrice,
       priceCurrency: "IDR",
       availability: "https://schema.org/InStock",
-      url: `https://solusiberdigital.id/layanan/${service.slug}`,
+      url: `https://solusiberdigital.com/layanan/${service.slug}`,
     },
   };
 

@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@solusiberdigital.id"
+                  placeholder="admin@solusiberdigital.com"
                   className="w-full h-11 pl-10 pr-4 theme-inset bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium rounded-xl"
                 />
               </div>
