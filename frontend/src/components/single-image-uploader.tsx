@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import imageCompression from "browser-image-compression";
 import { UploadCloud, X, Loader2 } from "lucide-react";
@@ -20,15 +20,30 @@ export function SingleImageUploader({
   label = "Gambar Cover / Thumbnail Artikel",
 }: SingleImageUploaderProps) {
   const [imagePath, setImagePath] = useState<string>(initialImagePath || "");
+  const [localFile, setLocalFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    initialImagePath ? getPublicImageUrl(initialImagePath) : null
+  );
+  const [isCompressing, setIsCompressing] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
+  // Bersihkan ObjectURL saat unmount
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setErrorMsg(null);
-    setIsUploading(true);
+    setIsCompressing(true);
 
     try {
       // 1. Kompresi gambar & konversi ke WebP di browser
@@ -46,41 +61,96 @@ export function SingleImageUploader({
         { type: "image/webp" }
       );
 
-      // 2. Upload ke endpoint S3
-      const formData = new FormData();
-      formData.append("file", webpFile);
-      formData.append("folder", folder);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Gagal mengupload gambar");
+      // Buat preview lokal langsung (tanpa upload ke S3 sekarang)
+      if (previewUrl && previewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
       }
+      const localBlobUrl = URL.createObjectURL(compressedBlob);
 
-      setImagePath(data.imagePath);
+      setLocalFile(webpFile);
+      setPreviewUrl(localBlobUrl);
     } catch (err: unknown) {
-      console.error("Upload error:", err);
-      setErrorMsg(err instanceof Error ? err.message : "Gagal mengupload gambar ke S3");
+      console.error("Compression error:", err);
+      setErrorMsg(err instanceof Error ? err.message : "Gagal memproses gambar");
     } finally {
-      setIsUploading(false);
+      setIsCompressing(false);
+      e.target.value = "";
     }
   };
 
   const handleRemove = () => {
+    if (previewUrl && previewUrl.startsWith("blob:")) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setImagePath("");
+    setLocalFile(null);
+    setPreviewUrl(null);
   };
 
-  const previewUrl = imagePath ? getPublicImageUrl(imagePath) : null;
+  // Daftarkan listener submit pada form induk agar upload S3 dieksekusi saat submit
+  useEffect(() => {
+    const inputEl = hiddenInputRef.current;
+    if (!inputEl) return;
+    const form = inputEl.closest("form");
+    if (!form) return;
+
+    const onFormSubmit = async (e: Event) => {
+      // Hanya upload jika ada file lokal baru yang dipilih
+      if (!localFile) return;
+
+      // Ambil judul atau slug dari form untuk nama file SEO
+      const formData = new FormData(form);
+      const title = (formData.get("title") as string)?.trim();
+      const slug = (formData.get("slug") as string)?.trim();
+      const seoName = slug || title || "cover";
+
+      setIsUploading(true);
+      setErrorMsg(null);
+
+      try {
+        const uploadData = new FormData();
+        uploadData.append("file", localFile);
+        uploadData.append("folder", folder);
+        uploadData.append("customName", seoName);
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: uploadData,
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || "Gagal mengupload gambar ke S3");
+        }
+
+        // Set value input tersembunyi agar Server Action menerima path gambar yang baru diupload
+        setImagePath(data.imagePath);
+        if (hiddenInputRef.current) {
+          hiddenInputRef.current.value = data.imagePath;
+        }
+      } catch (err: unknown) {
+        console.error("Upload error on submit:", err);
+        const msg = err instanceof Error ? err.message : "Gagal mengupload gambar ke S3";
+        setErrorMsg(msg);
+        e.preventDefault();
+        e.stopPropagation();
+        throw err;
+      } finally {
+        setIsUploading(false);
+      }
+    };
+
+    // Tambahkan listener dengan useCapture agar berjalan sebelum submit handler Form
+    form.addEventListener("submit", onFormSubmit, true);
+    return () => {
+      form.removeEventListener("submit", onFormSubmit, true);
+    };
+  }, [localFile, folder]);
 
   return (
     <div className="space-y-2">
       {/* Hidden input to pass imagePath into Form Data for Server Actions */}
-      <input type="hidden" name={name} value={imagePath} />
+      <input ref={hiddenInputRef} type="hidden" name={name} value={imagePath} />
 
       <label className="text-xs font-bold text-foreground uppercase tracking-wide block">
         {label}
@@ -92,6 +162,7 @@ export function SingleImageUploader({
             src={previewUrl}
             alt="Preview Cover"
             fill
+            unoptimized={previewUrl.startsWith("blob:")}
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 450px"
           />
@@ -102,18 +173,24 @@ export function SingleImageUploader({
               className="p-2.5 rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-all font-bold text-xs flex items-center gap-1.5 shadow-lg cursor-pointer"
             >
               <X className="size-4" />
-              <span>Hapus Gambar</span>
+              <span>Ganti / Hapus Gambar</span>
             </button>
           </div>
-          <div className="absolute bottom-2 left-2 px-2.5 py-1 rounded-lg bg-background/90 backdrop-blur-md text-[10px] font-mono text-muted-foreground border border-border">
-            {imagePath}
+          <div className="absolute bottom-2 left-2 px-2.5 py-1 rounded-lg bg-background/90 backdrop-blur-md text-[10px] font-mono text-muted-foreground border border-border flex items-center gap-2">
+            {localFile ? (
+              <span className="text-primary font-bold">
+                ✓ Siap diupload saat form disubmit ({localFile.name})
+              </span>
+            ) : (
+              <span>{imagePath}</span>
+            )}
           </div>
         </div>
       ) : (
         <div className="relative">
           <label className="theme-card-flat border-2 border-dashed border-border hover:border-primary/60 rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center gap-3 text-center cursor-pointer transition-colors bg-card/60 hover:bg-muted/40">
             <div className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary theme-card-flat">
-              {isUploading ? (
+              {isCompressing || isUploading ? (
                 <Loader2 className="size-6 animate-spin" />
               ) : (
                 <UploadCloud className="size-6" />
@@ -122,17 +199,21 @@ export function SingleImageUploader({
 
             <div className="space-y-1">
               <span className="text-xs font-bold text-foreground block">
-                {isUploading ? "Mengompresi & Mengupload ke S3..." : "Klik untuk Pilih & Upload Gambar"}
+                {isCompressing
+                  ? "Mengompresi Gambar..."
+                  : isUploading
+                  ? "Mengupload ke S3..."
+                  : "Klik untuk Pilih Gambar Cover"}
               </span>
               <p className="text-[11px] text-muted-foreground">
-                Otomatis dikompresi menjadi format <span className="font-mono text-primary font-bold">.webp</span> beresolusi tinggi sebelum disimpan ke S3.
+                Otomatis dikompresi ke <span className="font-mono text-primary font-bold">.webp</span>. Nama file akan otomatis memakai <span className="text-primary font-bold">Judul Artikel (SEO)</span> dan diupload ke S3 saat Anda klik Simpan.
               </p>
             </div>
 
             <input
               type="file"
               accept="image/*"
-              disabled={isUploading}
+              disabled={isCompressing || isUploading}
               onChange={handleFileChange}
               className="sr-only"
             />

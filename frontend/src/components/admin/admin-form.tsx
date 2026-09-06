@@ -9,6 +9,7 @@ interface AdminFormProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>,
   successMessage?: string;
   loadingMessage?: string;
   redirectUrl?: string;
+  beforeSubmit?: (formData: FormData) => Promise<boolean | void>;
   children: React.ReactNode;
 }
 
@@ -17,6 +18,7 @@ export function AdminForm({
   successMessage = "Data berhasil disimpan",
   loadingMessage = "Menyimpan data...",
   redirectUrl,
+  beforeSubmit,
   children,
   ...props
 }: AdminFormProps) {
@@ -66,6 +68,14 @@ export function AdminForm({
     startTransition(async () => {
       const toastId = toast.loading(loadingMessage);
       try {
+        if (beforeSubmit) {
+          const proceed = await beforeSubmit(formData);
+          if (proceed === false) {
+            toast.dismiss(toastId);
+            return;
+          }
+        }
+
         const res = await action(formData);
         if (res && !res.success) {
           toast.error(res.error || "Gagal menyimpan data", { id: toastId });

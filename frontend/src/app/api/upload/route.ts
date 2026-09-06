@@ -20,15 +20,17 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Generate clean unique filename
+    const customName = (formData.get("customName") as string)?.trim();
     const originalName = file.name || "image.webp";
-    const cleanName = originalName
+
+    // Bersihkan nama dasar untuk SEO URL slug
+    const baseName = customName || originalName.replace(/\.[^/.]+$/, "");
+    const cleanName = baseName
       .toLowerCase()
-      .replace(/\.[^/.]+$/, "") // hapus ekstensi lama
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
 
-    const filename = `${Date.now()}-${cleanName || "upload"}.webp`;
+    const filename = `${Date.now()}-${cleanName || "image"}.webp`;
     const s3Key = `${validFolder}/${filename}`;
 
     const result = await uploadBufferToS3(buffer, s3Key, "image/webp");
