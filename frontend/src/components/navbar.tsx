@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { Menu, X, ArrowRight, PhoneCall } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +87,7 @@ export function Navbar() {
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2 theme-btn"
+              "bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold shadow-md h-10 px-5 rounded-xl transition-all active:scale-[0.98] gap-2 theme-btn gtm-click-whatsapp"
             )}
           >
             {/* WhatsApp Icon */}
@@ -152,7 +152,7 @@ export function Navbar() {
               onClick={() => setIsOpen(false)}
               className={cn(
                 buttonVariants({ variant: "default" }),
-                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2 theme-btn"
+                "w-full bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold h-11 rounded-xl shadow-md flex items-center justify-center gap-2 theme-btn gtm-click-whatsapp"
               )}
             >
               <span>Chat WhatsApp Sekarang</span>

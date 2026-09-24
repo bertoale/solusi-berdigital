@@ -124,7 +124,7 @@ export function ServiceFaqAccordion({ faqs, serviceTitle }: ServiceFaqAccordionP
           )}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group"
+          className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs sm:text-sm px-6 h-12 rounded-xl active:scale-[0.98] transition-all w-full group gtm-click-whatsapp"
         >
           <svg
             className="w-4 h-4 fill-current shrink-0"

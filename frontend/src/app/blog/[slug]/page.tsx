@@ -189,7 +189,7 @@ export default async function BlogDetailPage({ params }: Props) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm px-6 h-12 rounded-2xl shrink-0 transition-all w-full sm:w-auto"
+              className="theme-btn inline-flex items-center justify-center gap-2.5 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm px-6 h-12 rounded-2xl shrink-0 transition-all w-full sm:w-auto gtm-click-whatsapp"
             >
               <PhoneCall className="size-4.5" />
               <span>Konsultasi via WhatsApp</span>

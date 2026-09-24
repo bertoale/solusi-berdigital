@@ -110,7 +110,7 @@ export function CTASection({
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 theme-btn bg-gradient-to-b from-[#28e16f] to-[#1ebe5d] text-white font-black text-base sm:text-lg px-8 h-14 rounded-2xl border-2 border-emerald-300/40 active:scale-[0.98] transition-all group"
+                  className="inline-flex items-center justify-center gap-3 theme-btn bg-gradient-to-b from-[#28e16f] to-[#1ebe5d] text-white font-black text-base sm:text-lg px-8 h-14 rounded-2xl border-2 border-emerald-300/40 active:scale-[0.98] transition-all group gtm-click-whatsapp"
                 >
                   <svg
                     className="w-6 h-6 fill-current shrink-0"
@@ -226,7 +226,7 @@ export function CTASection({
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="theme-btn flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-gradient-to-b from-blue-50 to-blue-100/90 dark:from-blue-950/70 dark:to-blue-900/50 border-2 border-blue-200/90 dark:border-blue-800/80 text-blue-950 dark:text-blue-100 hover:from-primary hover:to-primary-hover hover:text-primary-foreground hover:border-primary text-xs sm:text-sm font-bold transition-all group/item active:scale-[0.98]"
+                        className="theme-btn flex items-center justify-between p-3 sm:p-3.5 rounded-xl bg-gradient-to-b from-blue-50 to-blue-100/90 dark:from-blue-950/70 dark:to-blue-900/50 border-2 border-blue-200/90 dark:border-blue-800/80 text-blue-950 dark:text-blue-100 hover:from-primary hover:to-primary-hover hover:text-primary-foreground hover:border-primary text-xs sm:text-sm font-bold transition-all group/item active:scale-[0.98] gtm-click-whatsapp"
                       >
                         <div className="flex items-center gap-3">
                           <div className="size-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-600/15 text-blue-700 dark:text-blue-300 group-hover/item:bg-white/20 group-hover/item:text-white transition-colors">

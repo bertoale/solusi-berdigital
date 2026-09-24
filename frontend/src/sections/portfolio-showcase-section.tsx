@@ -219,7 +219,7 @@ export function PortfolioShowcaseSection() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-xs px-5 h-10 rounded-lg border border-border transition-colors w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-semibold text-xs px-5 h-10 rounded-lg border border-border transition-colors w-full sm:w-auto gtm-click-whatsapp"
               >
                 <span>Konsultasikan Model Serupa via WhatsApp</span>
                 <ChevronRight className="size-4 opacity-70" />

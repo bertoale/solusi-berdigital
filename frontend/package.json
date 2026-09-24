@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1124.0",
     "@base-ui/react": "^1.7.0",
+    "@tiptap/extension-link": "^3.31.0",
     "@tiptap/pm": "^3.31.0",
     "@tiptap/react": "^3.31.0",
     "@tiptap/starter-kit": "^3.31.0",

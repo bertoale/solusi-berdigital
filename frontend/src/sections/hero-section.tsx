@@ -59,7 +59,7 @@ export function HeroSection({
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-base px-8 py-4 rounded-2xl active:scale-[0.98] transition-all group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-base px-8 py-4 rounded-2xl active:scale-[0.98] transition-all group gtm-click-whatsapp"
               >
                 {/* Official WhatsApp SVG Icon */}
                 <svg

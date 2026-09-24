@@ -140,14 +140,14 @@ export function Footer() {
                   )}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="theme-btn inline-flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs px-4 h-9.5 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto shadow-xs"
+                  className="theme-btn inline-flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-xs px-4 h-9.5 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto shadow-xs gtm-click-whatsapp"
                 >
                   <PhoneCall className="size-3.5 shrink-0" />
                   <span>Chat via WhatsApp</span>
                 </a>
                 <a
                   href={SITE_CONFIG.getMailtoUrl("Konsultasi Layanan Solusi Berdigital")}
-                  className="theme-btn inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-9.5 rounded-xl border border-border transition-colors w-full sm:w-auto shadow-xs"
+                  className="theme-btn inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-9.5 rounded-xl border border-border transition-colors w-full sm:w-auto shadow-xs gtm-click-email"
                 >
                   <Mail className="size-3.5 text-primary shrink-0" />
                   <span>Kirim Email</span>

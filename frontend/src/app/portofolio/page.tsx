@@ -174,7 +174,7 @@ export default async function PortofolioPage({
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="theme-btn inline-flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-11 rounded-xl border border-border transition-colors"
+                        className="theme-btn inline-flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-bold text-xs px-4 h-11 rounded-xl border border-border transition-colors gtm-click-whatsapp"
                       >
                         <span>Tanya Proyek Ini</span>
                       </a>

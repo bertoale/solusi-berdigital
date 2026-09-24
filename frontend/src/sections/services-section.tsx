@@ -203,7 +203,7 @@ export function ServicesSection() {
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 theme-btn bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs sm:text-sm px-6 h-11 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto"
+                    className="inline-flex items-center justify-center gap-2 theme-btn bg-primary hover:bg-primary-hover text-primary-foreground font-bold text-xs sm:text-sm px-6 h-11 rounded-xl active:scale-[0.98] transition-all w-full sm:w-auto gtm-click-whatsapp"
                   >
                     <span>Konsultasikan Paket Ini</span>
                     <ArrowRight className="size-4" />
@@ -237,7 +237,7 @@ export function ServicesSection() {
             )}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl active:scale-[0.98] shrink-0 transition-all w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2.5 theme-btn bg-whatsapp hover:bg-whatsapp-hover text-whatsapp-foreground font-bold text-sm sm:text-base px-8 h-12 rounded-2xl active:scale-[0.98] shrink-0 transition-all w-full sm:w-auto gtm-click-whatsapp"
           >
             <PhoneCall className="size-4 sm:size-5 shrink-0" />
             <span>Tanya Rekomendasi via WhatsApp</span>
