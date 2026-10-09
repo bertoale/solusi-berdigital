@@ -34,11 +34,11 @@ export default async function AdminDashboardPage() {
       bg: "bg-amber-500/10",
     },
     {
-      title: "Artikel Blog & Edukasi",
+      title: "Artikel Blog (Terbit dari sb-blog)",
       count: blogs.length,
       published: blogs.filter((b) => b.isPublished).length,
-      href: "/admin/blog",
-      addHref: "/admin/blog/new",
+      href: "/blog",
+      addHref: undefined,
       icon: BookOpen,
       color: "text-emerald-500",
       bg: "bg-emerald-500/10",
@@ -87,13 +87,19 @@ export default async function AdminDashboardPage() {
                 <div className={`size-13 rounded-2xl ${st.bg} flex items-center justify-center ${st.color} theme-inset`}>
                   <Icon className="size-6" />
                 </div>
-                <Link
-                  href={st.addHref}
-                  className="theme-pill px-3 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border border-primary/20 text-xs font-bold flex items-center gap-1 transition-all"
-                >
-                  <Plus className="size-3.5" />
-                  <span>Tambah Baru</span>
-                </Link>
+                {st.addHref ? (
+                  <Link
+                    href={st.addHref}
+                    className="theme-pill px-3 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground border border-primary/20 text-xs font-bold flex items-center gap-1 transition-all"
+                  >
+                    <Plus className="size-3.5" />
+                    <span>Tambah Baru</span>
+                  </Link>
+                ) : (
+                  <span className="text-[11px] font-semibold text-muted-foreground bg-muted px-2.5 py-0.5 rounded-md">
+                    Dikelola di sb-blog
+                  </span>
+                )}
               </div>
 
               <div>
@@ -188,9 +194,13 @@ export default async function AdminDashboardPage() {
         {/* Recent Blogs */}
         <div className="theme-card bg-card p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="theme-text font-bold text-sm text-foreground">Artikel Blog Terkini</h3>
-            <Link href="/admin/blog" className="text-xs text-primary font-bold hover:underline">
-              Lihat Semua
+            <div>
+              <h3 className="theme-text font-bold text-sm text-foreground">Artikel Blog Terkini</h3>
+              <p className="text-[11px] text-muted-foreground">Otomatis sinkron dengan database `articles`</p>
+            </div>
+            <Link href="/blog" target="_blank" className="text-xs text-primary font-bold hover:underline inline-flex items-center gap-1">
+              <span>Buka Blog</span>
+              <ExternalLink className="size-3" />
             </Link>
           </div>
           <div className="space-y-2">
@@ -205,16 +215,17 @@ export default async function AdminDashboardPage() {
                     <span className="text-[11px] text-muted-foreground font-mono">{b.category}</span>
                   </div>
                   <Link
-                    href={`/admin/blog/${b.id}/edit`}
+                    href={`/blog/${b.slug}`}
+                    target="_blank"
                     className="theme-btn px-3 py-1.5 rounded-lg bg-card border border-border text-foreground hover:bg-muted font-bold shrink-0"
                   >
-                    Edit
+                    Lihat
                   </Link>
                 </div>
               ))
             ) : (
               <div className="p-6 text-center text-xs text-muted-foreground theme-inset bg-muted/20 border border-border/60 rounded-xl">
-                Belum ada artikel. Klik &quot;+ Tambah Baru&quot; di atas untuk menulis artikel.
+                Belum ada artikel yang dipublikasikan dari sb-blog.
               </div>
             )}
           </div>

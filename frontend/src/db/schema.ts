@@ -1,4 +1,4 @@
-import { mysqlTable, text, varchar, timestamp, boolean, json, int } from "drizzle-orm/mysql-core";
+import { mysqlTable, text, varchar, timestamp, boolean, json, int, bigint, datetime } from "drizzle-orm/mysql-core";
 
 // ==========================================
 // 1. USERS TABLE (Akun Login: id, email, password)
@@ -69,45 +69,42 @@ export type PortfolioCategory = typeof portfolioCategories.$inferSelect;
 export type NewPortfolioCategory = typeof portfolioCategories.$inferInsert;
 
 // ==========================================
-// 5. BLOGS TABLE (Artikel & Tips - imagePath & blog_faqs)
+// 5. ARTICLES & ARTICLE CATEGORIES (Mapping ke tabel sb-blog)
 // ==========================================
-export interface BlogFaqItem {
+export interface FAQItem {
   question: string;
   answer: string;
 }
+export type BlogFaqItem = FAQItem;
 
-export const blogs = mysqlTable("blogs", {
-  id: varchar("id", { length: 128 }).primaryKey(),
-  slug: varchar("slug", { length: 128 }).notNull().unique(),
-  title: text("title").notNull(),
-  excerpt: text("excerpt").notNull(),
-  content: text("content").notNull(),
-  category: varchar("category", { length: 100 }).notNull(),
-  author: varchar("author", { length: 100 }).default("Tim Solusi Berdigital").notNull(),
-  imagePath: text("image_path"),
-  tags: json("tags").$type<string[]>().default([]),
-  blogFaqs: json("blog_faqs").$type<BlogFaqItem[]>().default([]),
-  isPublished: boolean("is_published").default(true).notNull(),
-  publishedAt: timestamp("published_at").defaultNow().notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
-
-export type Blog = typeof blogs.$inferSelect;
-export type NewBlog = typeof blogs.$inferInsert;
-
-// ==========================================
-// 6. BLOG CATEGORIES TABLE (Kategori Blog)
-// ==========================================
-export const blogCategories = mysqlTable("blog_categories", {
-  id: varchar("id", { length: 128 }).primaryKey(),
-  name: varchar("name", { length: 100 }).notNull().unique(),
-  slug: varchar("slug", { length: 128 }).notNull().unique(),
+export const articleCategories = mysqlTable("article_categories", {
+  id: bigint("id", { mode: "number", unsigned: true }).primaryKey().autoincrement(),
+  name: varchar("name", { length: 100 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
   description: text("description"),
-  order: int("order").default(0).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at", { fsp: 3 }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { fsp: 3 }).defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at", { fsp: 3 }),
 });
 
-export type BlogCategory = typeof blogCategories.$inferSelect;
-export type NewBlogCategory = typeof blogCategories.$inferInsert;
+export type ArticleCategory = typeof articleCategories.$inferSelect;
+
+export const articles = mysqlTable("articles", {
+  id: bigint("id", { mode: "number", unsigned: true }).primaryKey().autoincrement(),
+  title: varchar("title", { length: 300 }).notNull(),
+  slug: varchar("slug", { length: 300 }).notNull().unique(),
+  excerpt: text("excerpt"),
+  content: text("content"),
+  featuredImageUrl: varchar("featured_image_url", { length: 500 }),
+  categoryId: bigint("category_id", { mode: "number", unsigned: true }).notNull(),
+  status: varchar("status", { length: 20 }).default("draft").notNull(),
+  tags: json("tags").$type<string[]>().default([]),
+  faq: json("faq").$type<FAQItem[]>().default([]),
+  topicMapItemId: bigint("topic_map_item_id", { mode: "number", unsigned: true }),
+  createdAt: timestamp("created_at", { fsp: 3 }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { fsp: 3 }).defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at", { fsp: 3 }),
+});
+
+export type Article = typeof articles.$inferSelect;

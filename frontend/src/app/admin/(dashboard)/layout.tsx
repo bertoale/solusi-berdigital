@@ -42,13 +42,6 @@ export default async function AdminDashboardLayout({
         { label: "Kategori Portofolio", href: "/admin/portofolio/kategori", icon: FolderTree },
       ],
     },
-    {
-      group: "Blog & Artikel",
-      items: [
-        { label: "Semua Artikel", href: "/admin/blog", icon: BookOpen },
-        { label: "Kategori Blog", href: "/admin/blog/kategori", icon: Tag },
-      ],
-    },
   ];
 
   return (

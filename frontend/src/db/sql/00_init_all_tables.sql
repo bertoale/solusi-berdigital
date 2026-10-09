@@ -63,38 +63,5 @@ CREATE TABLE IF NOT EXISTS `portfolio_images` (
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 5. Tabel Kategori Blog
-CREATE TABLE IF NOT EXISTS `blog_categories` (
-  `id` VARCHAR(128) NOT NULL,
-  `name` VARCHAR(100) NOT NULL,
-  `slug` VARCHAR(128) NOT NULL,
-  `description` TEXT NULL,
-  `order` INT NOT NULL DEFAULT 0,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_blog_categories_name` (`name`),
-  UNIQUE KEY `uk_blog_categories_slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- 6. Tabel Artikel Blog (image_path & blog_faqs)
-CREATE TABLE IF NOT EXISTS `blogs` (
-  `id` VARCHAR(128) NOT NULL,
-  `slug` VARCHAR(128) NOT NULL,
-  `title` TEXT NOT NULL,
-  `excerpt` TEXT NOT NULL COMMENT 'Ringkasan / Cuplikan Artikel',
-  `content` TEXT NOT NULL COMMENT 'Konten Lengkap Tiptap HTML / Markdown',
-  `category` VARCHAR(100) NOT NULL,
-  `author` VARCHAR(100) NOT NULL DEFAULT 'Tim Solusi Berdigital',
-  `image_path` TEXT NULL COMMENT 'Path Gambar Cover di S3, e.g. /blog/172530000-sample.webp',
-  `tags` JSON NULL COMMENT 'Array tag string JSON',
-  `blog_faqs` JSON NULL COMMENT 'Array JSON FAQ [{question, answer}] untuk skema JSON-LD FAQPage',
-  `is_published` BOOLEAN NOT NULL DEFAULT TRUE,
-  `published_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_blogs_slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 SET FOREIGN_KEY_CHECKS = 1;
+

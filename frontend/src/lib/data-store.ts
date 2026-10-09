@@ -1,4 +1,4 @@
-import { eq, desc, asc, and, like, or } from "drizzle-orm";
+import { eq, desc, asc, and, like, or, isNull } from "drizzle-orm";
 import { db } from "@/db";
 import {
   users,
@@ -10,13 +10,31 @@ import {
   PortfolioWithImages,
   portfolioCategories,
   PortfolioCategory,
-  blogs,
-  Blog,
-  blogCategories,
-  BlogCategory,
-  BlogFaqItem,
+  articles,
+  Article,
+  articleCategories,
+  ArticleCategory,
+  FAQItem,
 } from "@/db/schema";
 import { staticServices, StaticService } from "./services-data";
+
+// Compatibility Interface for Blog View
+export interface BlogView {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  imagePath: string | null;
+  tags: string[];
+  blogFaqs: FAQItem[];
+  isPublished: boolean;
+  publishedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 // Re-export Schema Types for Convenience
 export type {
@@ -25,9 +43,9 @@ export type {
   PortfolioImage,
   PortfolioWithImages,
   PortfolioCategory,
-  Blog,
-  BlogCategory,
-  BlogFaqItem,
+  Article,
+  ArticleCategory,
+  FAQItem,
 };
 
 // ============================================================================
@@ -160,84 +178,30 @@ export async function deletePortfolioCategory(id: string): Promise<boolean> {
 }
 
 // ============================================================================
-// 4. BLOG CATEGORIES (DATABASE `blog_categories`)
+// 4. BLOG CATEGORIES (DATABASE `article_categories` dari sb-blog)
 // ============================================================================
-export async function getAllBlogCategories(): Promise<BlogCategory[]> {
+export async function getAllBlogCategories(): Promise<ArticleCategory[]> {
   try {
     return await db
       .select()
-      .from(blogCategories)
-      .orderBy(asc(blogCategories.order));
+      .from(articleCategories)
+      .where(and(eq(articleCategories.isActive, true), isNull(articleCategories.deletedAt)))
+      .orderBy(asc(articleCategories.name));
   } catch {
     return [];
   }
 }
 
-export async function getBlogCategoryById(id: string): Promise<BlogCategory | null> {
+export async function getBlogCategoryBySlug(slug: string): Promise<ArticleCategory | null> {
   try {
     const res = await db
       .select()
-      .from(blogCategories)
-      .where(eq(blogCategories.id, id))
+      .from(articleCategories)
+      .where(and(eq(articleCategories.slug, slug), isNull(articleCategories.deletedAt)))
       .limit(1);
     return res[0] || null;
   } catch {
     return null;
-  }
-}
-
-export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory | null> {
-  try {
-    const res = await db
-      .select()
-      .from(blogCategories)
-      .where(eq(blogCategories.slug, slug))
-      .limit(1);
-    return res[0] || null;
-  } catch {
-    return null;
-  }
-}
-
-export async function createBlogCategory(
-  data: Omit<BlogCategory, "id" | "createdAt" | "updatedAt">
-): Promise<BlogCategory> {
-  const newId = `blog-cat-${Date.now()}`;
-  const record = {
-    id: newId,
-    name: data.name,
-    slug: data.slug,
-    description: data.description || null,
-    order: data.order ?? 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  await db.insert(blogCategories).values(record);
-  return record;
-}
-
-export async function updateBlogCategory(
-  id: string,
-  data: Partial<BlogCategory>
-): Promise<BlogCategory | null> {
-  await db
-    .update(blogCategories)
-    .set({
-      ...data,
-      updatedAt: new Date(),
-    })
-    .where(eq(blogCategories.id, id));
-
-  return getBlogCategoryById(id);
-}
-
-export async function deleteBlogCategory(id: string): Promise<boolean> {
-  try {
-    await db.delete(blogCategories).where(eq(blogCategories.id, id));
-    return true;
-  } catch {
-    return false;
   }
 }
 
@@ -418,91 +382,93 @@ export async function deletePortfolio(id: string): Promise<boolean> {
 }
 
 // ============================================================================
-// 6. BLOGS (DATABASE `blogs`)
+// 6. ARTICLES (DATABASE `articles` & `article_categories` dari sb-blog)
 // ============================================================================
+function mapArticleToBlogView(
+  article: Article,
+  categoryName: string = "Umum"
+): BlogView {
+  return {
+    id: String(article.id),
+    slug: article.slug,
+    title: article.title,
+    excerpt: article.excerpt || "",
+    content: article.content || "",
+    category: categoryName,
+    author: "Tim Solusi Berdigital",
+    imagePath: article.featuredImageUrl || null,
+    tags: Array.isArray(article.tags) ? article.tags : [],
+    blogFaqs: Array.isArray(article.faq) ? article.faq : [],
+    isPublished: article.status === "published",
+    publishedAt: article.createdAt,
+    createdAt: article.createdAt,
+    updatedAt: article.updatedAt,
+  };
+}
+
 export async function getAllBlogs(options?: {
   onlyPublished?: boolean;
   category?: string;
   searchQuery?: string;
-}): Promise<Blog[]> {
+}): Promise<BlogView[]> {
   try {
-    const conditions = [];
-    if (options?.onlyPublished) {
-      conditions.push(eq(blogs.isPublished, true));
-    }
-    if (options?.category && options.category !== "all") {
-      conditions.push(like(blogs.category, `%${options.category}%`));
-    }
-    if (options?.searchQuery) {
-      const q = `%${options.searchQuery}%`;
-      conditions.push(or(like(blogs.title, q), like(blogs.excerpt, q)));
+    const conditions = [isNull(articles.deletedAt)];
+
+    if (options?.onlyPublished ?? true) {
+      conditions.push(eq(articles.status, "published"));
     }
 
-    const query = db.select().from(blogs).orderBy(desc(blogs.publishedAt));
-    return conditions.length > 0 ? await query.where(and(...conditions)) : await query;
-  } catch {
+    if (options?.category && options.category !== "all") {
+      conditions.push(eq(articleCategories.slug, options.category));
+    }
+
+    if (options?.searchQuery) {
+      const q = `%${options.searchQuery}%`;
+      const searchCond = or(like(articles.title, q), like(articles.excerpt, q));
+      if (searchCond) {
+        conditions.push(searchCond);
+      }
+    }
+
+    const rows = await db
+      .select({
+        article: articles,
+        category: articleCategories,
+      })
+      .from(articles)
+      .leftJoin(articleCategories, eq(articles.categoryId, articleCategories.id))
+      .where(and(...conditions))
+      .orderBy(desc(articles.createdAt));
+
+    return rows.map((r) => mapArticleToBlogView(r.article, r.category?.name || "Umum"));
+  } catch (err) {
+    console.error("Error fetching articles from db:", err);
     return [];
   }
 }
 
-export async function getBlogBySlug(slug: string): Promise<Blog | null> {
+export async function getBlogBySlug(slug: string): Promise<BlogView | null> {
   try {
-    const res = await db.select().from(blogs).where(eq(blogs.slug, slug)).limit(1);
-    return res[0] || null;
-  } catch {
+    const rows = await db
+      .select({
+        article: articles,
+        category: articleCategories,
+      })
+      .from(articles)
+      .leftJoin(articleCategories, eq(articles.categoryId, articleCategories.id))
+      .where(
+        and(
+          eq(articles.slug, slug),
+          eq(articles.status, "published"),
+          isNull(articles.deletedAt)
+        )
+      )
+      .limit(1);
+
+    if (rows.length === 0) return null;
+    return mapArticleToBlogView(rows[0].article, rows[0].category?.name || "Umum");
+  } catch (err) {
+    console.error("Error fetching article by slug:", err);
     return null;
-  }
-}
-
-export async function getBlogById(id: string): Promise<Blog | null> {
-  try {
-    const res = await db.select().from(blogs).where(eq(blogs.id, id)).limit(1);
-    return res[0] || null;
-  } catch {
-    return null;
-  }
-}
-
-export async function createBlog(data: Omit<Blog, "id" | "createdAt" | "updatedAt">): Promise<Blog> {
-  const newId = `blog-${Date.now()}`;
-  const record: Blog = {
-    id: newId,
-    slug: data.slug,
-    title: data.title,
-    excerpt: data.excerpt,
-    content: data.content,
-    category: data.category,
-    author: data.author,
-    imagePath: data.imagePath || null,
-    tags: data.tags || [],
-    blogFaqs: data.blogFaqs || [],
-    isPublished: data.isPublished ?? true,
-    publishedAt: data.publishedAt || new Date(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  await db.insert(blogs).values(record);
-  return record;
-}
-
-export async function updateBlog(id: string, data: Partial<Blog>): Promise<Blog | null> {
-  await db
-    .update(blogs)
-    .set({
-      ...data,
-      updatedAt: new Date(),
-    })
-    .where(eq(blogs.id, id));
-
-  return getBlogById(id);
-}
-
-export async function deleteBlog(id: string): Promise<boolean> {
-  try {
-    await db.delete(blogs).where(eq(blogs.id, id));
-    return true;
-  } catch {
-    return false;
   }
 }
