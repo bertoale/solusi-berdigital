@@ -138,7 +138,7 @@ export default async function AdminDashboardLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 relative z-10">
+      <div className="flex-1 flex flex-col min-w-0 relative z-10">
         {/* Top bar for breadcrumb */}
         <header className="h-16 border-b border-border/80 bg-card/80 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
@@ -159,7 +159,7 @@ export default async function AdminDashboardLayout({
 
         {/* Page children content */}
         <div className="p-6 sm:p-8 lg:p-10 flex-1">{children}</div>
-      </main>
+      </div>
       <Toaster richColors position="top-right" />
     </div>
   );

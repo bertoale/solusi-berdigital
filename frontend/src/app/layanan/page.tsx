@@ -41,9 +41,9 @@ export default async function LayananPage() {
     <div className="min-h-screen bg-background relative overflow-hidden bg-noise">
       {/* Background Ambient Glow & Dot Matrix Texture */}
       <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
-        <div className="absolute -top-24 right-1/4 w-[650px] h-[450px] bg-gradient-to-br from-primary/15 via-primary-muted/10 to-transparent rounded-full blur-[140px]" />
-        <div className="absolute top-1/2 left-0 w-[550px] h-[500px] bg-gradient-to-tr from-warning/15 via-primary/10 to-transparent rounded-full blur-[130px]" />
-        <div className="absolute -bottom-20 right-10 w-[550px] h-[400px] bg-gradient-to-tl from-primary/15 via-warning/10 to-transparent rounded-full blur-[130px]" />
+        <div className="absolute -top-24 right-1/4 w-[650px] h-[450px] bg-gradient-to-br from-primary/15 via-primary-muted/10 to-transparent rounded-full blur-[140px] pointer-events-none transform-gpu contain-strict" />
+        <div className="absolute top-1/2 left-0 w-[550px] h-[500px] bg-gradient-to-tr from-warning/15 via-primary/10 to-transparent rounded-full blur-[130px] pointer-events-none transform-gpu contain-strict" />
+        <div className="absolute -bottom-20 right-10 w-[550px] h-[400px] bg-gradient-to-tl from-primary/15 via-warning/10 to-transparent rounded-full blur-[130px] pointer-events-none transform-gpu contain-strict" />
         <div className="absolute inset-0 bg-[radial-gradient(var(--color-primary)_1.2px,transparent_1.2px)] [background-size:32px_32px] opacity-10 dark:opacity-10 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_60%,transparent_100%)]" />
       </div>
 

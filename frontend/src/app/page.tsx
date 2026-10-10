@@ -7,6 +7,11 @@ import {
   CTASection,
 } from "@/sections"
 import { HomeFaqSchema } from "@/jsonLD"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "https://solusiberdigital.com" },
+}
 
 export default function Home() {
   return (

@@ -33,9 +33,9 @@ export function ServicesSection() {
       {/* Structural Blueprint, Dot Matrix, Ambient PNG & Mesh Lighting Backdrop */}
       <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
         {/* Rich Ambient Brand Aurora Glow Orbs */}
-        <div className="absolute -top-24 right-1/4 w-[650px] h-[450px] bg-gradient-to-br from-primary/10 via-primary-muted/10 to-transparent rounded-full blur-[130px]" />
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-warning/10 via-primary/5 to-transparent rounded-full blur-[120px]" />
-        <div className="absolute -bottom-20 right-10 w-[550px] h-[400px] bg-gradient-to-tl from-primary/10 via-warning/5 to-transparent rounded-full blur-[130px]" />
+        <div className="absolute -top-24 right-1/4 w-[650px] h-[450px] bg-gradient-to-br from-primary/10 via-primary-muted/10 to-transparent rounded-full blur-[130px] pointer-events-none transform-gpu contain-strict" />
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-warning/10 via-primary/5 to-transparent rounded-full blur-[120px] pointer-events-none transform-gpu contain-strict" />
+        <div className="absolute -bottom-20 right-10 w-[550px] h-[400px] bg-gradient-to-tl from-primary/10 via-warning/5 to-transparent rounded-full blur-[130px] pointer-events-none transform-gpu contain-strict" />
 
         {/* Modern Dot Matrix Texture */}
         <div className="absolute inset-0 bg-[radial-gradient(var(--color-primary)_1.2px,transparent_1.2px)] [background-size:32px_32px] opacity-10 dark:opacity-10 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_60%,transparent_100%)]" />
@@ -104,7 +104,6 @@ export function ServicesSection() {
                 src="/solution.png"
                 alt="Solusi Berdigital Services"
                 fill
-                priority
                 sizes="(max-width: 1200px) 40vw, 460px"
                 className="object-contain object-right drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-105"
               />
@@ -145,9 +144,10 @@ export function ServicesSection() {
                   <div className="flex items-start gap-4">
                     <Link
                       href={`/layanan/${service.slug}`}
+                      aria-label={`Detail layanan ${service.title}`}
                       className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 text-primary group-hover:scale-105 transition-transform"
                     >
-                      <Icon className="size-6" />
+                      <Icon className="size-6" aria-hidden="true" />
                     </Link>
                     <div className="space-y-1">
                       <Link href={`/layanan/${service.slug}`} className="block">

@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import { ArrowRight, CheckCircle, ShieldCheck } from "lucide-react";
@@ -24,9 +22,10 @@ export function HeroSection({
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
         <Image
           src={backgroundImageUrl}
-          alt="Modern digital agency workspace background"
+          alt=""
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover object-center opacity-40 dark:opacity-15"
         />
@@ -102,7 +101,7 @@ export function HeroSection({
         <div className="relative w-full h-full">
           <Image
             src={cutoutImageUrl}
-            alt="Solusi Berdigital - Karakter Halo"
+            alt="Karakter maskot Solusi Berdigital menyapa pelanggan"
             fill
             priority
             sizes="(max-width: 1200px) 300px, 360px"

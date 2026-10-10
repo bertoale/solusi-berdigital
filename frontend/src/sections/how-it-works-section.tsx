@@ -98,7 +98,6 @@ export function HowItWorksSection() {
                 src="/step-image.png"
                 alt="Alur Kerja Pembuatan Website"
                 fill
-                priority
                 sizes="(max-width: 1200px) 40vw, 500px"
                 className="object-contain object-right drop-shadow-[0_20px_35px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-105"
               />
