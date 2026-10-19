@@ -4,6 +4,7 @@ import {
   HowItWorksSection,
   WhyChooseUsSection,
   FAQSection,
+  BlogInsightSection,
   CTASection,
 } from "@/sections"
 import { HomeFaqSchema } from "@/jsonLD"
@@ -22,6 +23,7 @@ export default function Home() {
       <HowItWorksSection />
       <WhyChooseUsSection />
       <FAQSection />
+      <BlogInsightSection />
       <CTASection />
     </div>
   )
