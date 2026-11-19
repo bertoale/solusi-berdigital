@@ -21,14 +21,39 @@ const getSitemapData = unstable_cache(
 // Tanggal tetap (bukan new Date()) agar sinyal lastmod bermakna.
 const STATIC_LAST_MODIFIED = new Date("2026-10-01");
 
+function getLatestDate(
+  dates: Array<Date | string | null | undefined>,
+  fallback: Date
+): Date {
+  let latest = fallback;
+  for (const d of dates) {
+    if (!d) continue;
+    const parsed = new Date(d);
+    if (!Number.isNaN(parsed.getTime()) && parsed > latest) {
+      latest = parsed;
+    }
+  }
+  return latest;
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://solusiberdigital.com";
+  const { services, portfolios, blogs } = await getSitemapData();
 
-  // 1. Static Pages
+  const latestBlogDate = getLatestDate(
+    blogs.map((b) => b.updatedAt || b.publishedAt),
+    STATIC_LAST_MODIFIED
+  );
+  const latestPortfolioDate = getLatestDate(
+    portfolios.map((p) => p.updatedAt || p.createdAt),
+    STATIC_LAST_MODIFIED
+  );
+
+  // 1. Static Pages (halaman listing mengikuti konten dinamis terbarunya)
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: STATIC_LAST_MODIFIED,
+      lastModified: latestBlogDate,
       changeFrequency: "weekly",
       priority: 1.0,
     },
@@ -40,19 +65,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/portofolio`,
-      lastModified: STATIC_LAST_MODIFIED,
+      lastModified: latestPortfolioDate,
       changeFrequency: "daily",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: STATIC_LAST_MODIFIED,
+      lastModified: latestBlogDate,
       changeFrequency: "daily",
       priority: 0.9,
     },
   ];
-
-  const { services, portfolios, blogs } = await getSitemapData();
 
   // 2. Layanan Pages
   const serviceRoutes: MetadataRoute.Sitemap = services.map((service) => ({

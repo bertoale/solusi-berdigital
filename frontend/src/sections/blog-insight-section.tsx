@@ -12,6 +12,7 @@ import {
   Sparkles,
   Tag,
 } from "lucide-react";
+import { HomeBlogItemListSchema } from "@/jsonLD";
 
 export async function BlogInsightSection() {
   const blogs = await getAllBlogs({ onlyPublished: true });
@@ -23,10 +24,12 @@ export async function BlogInsightSection() {
   }
 
   return (
-    <section
-      className="py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-background via-primary/[0.025] to-background border-b border-border/60 relative overflow-hidden bg-noise"
-      id="blog"
-    >
+    <>
+      <HomeBlogItemListSchema blogs={recentBlogs} />
+      <section
+        className="py-16 sm:py-20 lg:py-28 bg-gradient-to-b from-background via-primary/[0.025] to-background border-b border-border/60 relative overflow-hidden bg-noise"
+        id="blog"
+      >
       {/* Background Lighting & Dot Matrix */}
       <div className="pointer-events-none absolute inset-0 select-none overflow-hidden">
         <div className="absolute top-1/4 -right-20 w-[550px] h-[500px] rounded-full bg-gradient-to-bl from-primary/10 via-primary/5 to-transparent blur-[140px]" />
@@ -160,5 +163,6 @@ export async function BlogInsightSection() {
         </div>
       </div>
     </section>
+    </>
   );
 }
